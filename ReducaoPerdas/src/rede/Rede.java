@@ -44,7 +44,7 @@ public class Rede {
             linha = linha.replaceAll("\t", " ");
 
             // separando as partes da linha por espaço
-            String[] partes = linha.split(" ");
+            String[] partes = linha.split("\\s+");
 
             if (partes[0].startsWith(".")) {
                 lendoAresta = Boolean.FALSE;
@@ -146,7 +146,7 @@ public class Rede {
     }
 
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_13_3.pos";
+        String arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
         System.out.println(rede);
