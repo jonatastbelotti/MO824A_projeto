@@ -41,9 +41,7 @@ public class Aresta {
     public void setS_NS(Boolean S_NS) {
         this.S_NS = S_NS;
     }
-    
-    
-    
+
     public void setChave() {
         this.isChave = Boolean.TRUE;
     }
