@@ -8,17 +8,17 @@ import rede.Rede;
  * @author Jônatas Trabuco Belotti [jonatas.t.belotti@hotmail.com]
  */
 public class GA {
-
+    
     private Rede rede;
     private Integer tamPopulacao;
     private List<Cromossomo> populacao;
     private Cromossomo melhorSolucao;
     private Boolean verbose = Boolean.TRUE;
-
+    
     public void setVerbose(Boolean verbose) {
         this.verbose = verbose;
     }
-
+    
     public Cromossomo executar(Integer tempoExecucao) {
         Integer geracao;
         Long tempInicial;
@@ -32,7 +32,7 @@ public class GA {
         this.avaliarPopulacao(this.populacao);
 
         // selecionando melhor individuo
-        this.melhorSolucao = this.buscarMelhorCromossomo(this.populacao);
+        this.melhorSolucao = new Cromossomo(this.buscarMelhorCromossomo(this.populacao));
         this.imprimirResultadoAtual(geracao, this.melhorSolucao);
 
         // executando iterações do algoritmo
@@ -57,14 +57,14 @@ public class GA {
 
             // atualizando melhor solução
             Cromossomo atual = this.buscarMelhorCromossomo(this.populacao);
-
+            
             if (atual.getFitness() < this.melhorSolucao.getFitness()) {
                 this.melhorSolucao = new Cromossomo(atual);
                 this.imprimirResultadoAtual(geracao, this.melhorSolucao);
             }
         }
-
+        
         return this.melhorSolucao;
     }
-
+    
 }
