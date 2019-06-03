@@ -63,7 +63,7 @@ public class Rede {
                         this.vertices = new Vertice[numVertices];
 
                         for (int i = 0; i < this.vertices.length; i++) {
-                            this.vertices[i] = new Vertice();
+                            this.vertices[i] = new Vertice(i);
                         }
 
                         break;
@@ -116,6 +116,7 @@ public class Rede {
                 this.arestas[id] = new Aresta(id, this.vertices[id_origem], this.vertices[id_destino]);
                 this.arestas[id].setR(Double.parseDouble(partes[R]));
                 this.arestas[id].setX(Double.parseDouble(partes[X]));
+                this.vertices[id_origem].addAresta(this.arestas[id]);
 
                 if (lendoAresta) {
                     this.arestas[id].setPL_kw(Double.parseDouble(partes[PL_KW]));
@@ -134,14 +135,30 @@ public class Rede {
 
     }
 
+    public Integer getNumVertices() {
+        return numVertices;
+    }
+
+    public Integer getNumArestas() {
+        return numArestas;
+    }
+
+    public Integer getNumChaves() {
+        return numChaves;
+    }
+
+    public Integer getNumFontes() {
+        return numFontes;
+    }
+
     @Override
     public String toString() {
         String resp = "Rede com " + this.numVertices + " nós e " + this.numArestas + " arestas.";
-        
+
         resp += "\nSendo:";
         resp += "\n " + this.numFontes + " fontes";
         resp += "\n " + this.numChaves + " chaves";
-        
+
         return resp;
     }
 
