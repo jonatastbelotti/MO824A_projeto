@@ -26,4 +26,16 @@ public class Vertice {
         this.arestasDestino.add(aresta);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public Boolean getIsFonte() {
+        return isFonte;
+    }
+
+    public List<Aresta> getArestasDestino() {
+        return arestasDestino;
+    }
+
 }

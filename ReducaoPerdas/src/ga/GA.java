@@ -1,5 +1,6 @@
 package ga;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import rede.Rede;
@@ -15,6 +16,11 @@ public class GA {
     private List<Cromossomo> populacao;
     private Cromossomo melhorSolucao;
     private Boolean verbose = Boolean.TRUE;
+
+    public GA(Rede rede, Integer tamPopulacao) {
+        this.rede = rede;
+        this.tamPopulacao = tamPopulacao;
+    }
 
     public void setVerbose(Boolean verbose) {
         this.verbose = verbose;
@@ -98,6 +104,14 @@ public class GA {
         if (this.verbose) {
             System.out.printf("[Gera. %d] (Fit. %f)", geracao, sol.getFitness());
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        String arquivo = "instances/bus_13_3.pos";
+
+        Rede rede = new Rede(arquivo);
+        GA ga = new GA(rede, rede.getNumVertices());
+        Cromossomo resultado = ga.executar(60 * 1);
     }
 
 }

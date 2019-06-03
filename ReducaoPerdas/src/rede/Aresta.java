@@ -46,4 +46,45 @@ public class Aresta {
         this.isChave = Boolean.TRUE;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public Vertice getOrigem() {
+        return origem;
+    }
+
+    public Vertice getDestino() {
+        return destino;
+    }
+
+    public Double getR() {
+        return R;
+    }
+
+    public Double getX() {
+        return X;
+    }
+
+    public Double getPL_kw() {
+        return PL_kw;
+    }
+
+    public Double getQL_kvar() {
+        return QL_kvar;
+    }
+
+    public Boolean getS_NS() {
+        return S_NS;
+    }
+
+    public Boolean getIsChave() {
+        return isChave;
+    }
+
+    @Override
+    public String toString() {
+        return "" + id;
+    }
+
 }

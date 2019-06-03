@@ -150,6 +150,10 @@ public class Rede {
     public Integer getNumFontes() {
         return numFontes;
     }
+    
+    public Aresta getAresta(Integer id) {
+        return this.arestas[id];
+    }
 
     @Override
     public String toString() {

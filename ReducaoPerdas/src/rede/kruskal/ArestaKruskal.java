@@ -30,4 +30,9 @@ public class ArestaKruskal {
         return peso;
     }
 
+    @Override
+    public String toString() {
+        return "" + id;
+    }
+
 }
