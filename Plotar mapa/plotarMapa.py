@@ -90,7 +90,7 @@ def plotarRede(rede_):
 
         cor = 'k-'
         if aresta['isChave']:
-            cor = 'b-'
+            cor = 'k--'
 
         plt.plot([no_origem['x'], no_destino['x']], [no_origem['y'], no_destino['y']], cor)
     
