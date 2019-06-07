@@ -1,5 +1,9 @@
 package ga;
 
+import ga.configuracoes.TipoCruzamento;
+import ga.configuracoes.TipoMutacao;
+import ga.configuracoes.TipoSelecao;
+import ga.configuracoes.TipoSelecaoNovaPopulacao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +19,21 @@ public class GA {
     private Integer tamPopulacao;
     private List<Cromossomo> populacao;
     private Cromossomo melhorSolucao;
+    private TipoSelecao tipoSelecao;
+    private TipoCruzamento tipoCruzamento;
+    private TipoMutacao tipoMutacao;
+    private Double taxaMutacao;
+    private TipoSelecaoNovaPopulacao tipoSelecaoNovaPopulacao;
     private Boolean verbose = Boolean.TRUE;
 
-    public GA(Rede rede, Integer tamPopulacao) {
+    public GA(Rede rede, Integer tamPopulacao, TipoSelecao tipoSelecao, TipoCruzamento tipoCruzamento, TipoMutacao tipoMutacao, Double taxaMutacao, TipoSelecaoNovaPopulacao tipoSelecaoNovaPopulacao) {
         this.rede = rede;
         this.tamPopulacao = tamPopulacao;
+        this.tipoSelecao = tipoSelecao;
+        this.tipoCruzamento = tipoCruzamento;
+        this.tipoMutacao = tipoMutacao;
+        this.taxaMutacao = taxaMutacao;
+        this.tipoSelecaoNovaPopulacao = tipoSelecaoNovaPopulacao;
     }
 
     public void setVerbose(Boolean verbose) {
@@ -91,6 +105,7 @@ public class GA {
     private Cromossomo buscarMelhorCromossomo(List<Cromossomo> pop) {
         Cromossomo resp = pop.get(0);
 
+        // percorre todos os cromossomos buscando o melhor
         for (Cromossomo c : pop) {
             if (c.getFitness() < resp.getFitness()) {
                 resp = c;
