@@ -121,11 +121,26 @@ public class GA {
         }
     }
 
+    @Override
+    public String toString() {
+        String resp = "Algoritmo Genético:";
+        
+        resp += "\n Tamanho população = " + this.tamPopulacao;
+        resp += "\n Tipo seleção pais = " + this.tipoSelecao;
+        resp += "\n Tipo cruzamento = " + this.tipoCruzamento;
+        resp += "\n Tipo mutação = " + this.tipoMutacao;
+        resp += "\n Taxa mutação = " + this.taxaMutacao;
+        resp += "\n Seleção nova população = " + this.tipoSelecaoNovaPopulacao;
+        
+        return resp;
+    }
+
     public static void main(String[] args) throws IOException {
         String arquivo = "instances/bus_13_3.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, rede.getNumVertices());
+        GA ga = new GA(rede, rede.getNumVertices(), TipoSelecao.ROLETA, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.05D, TipoSelecaoNovaPopulacao.JUNCAO);
+        System.out.println(ga + "\nExecução:");
         Cromossomo resultado = ga.executar(60 * 1);
     }
 

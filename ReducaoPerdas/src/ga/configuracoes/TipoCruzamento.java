@@ -17,4 +17,9 @@ public enum TipoCruzamento {
         this.pontos = pontos;
     }
 
+    @Override
+    public String toString() {
+        return this.nome;
+    }
+
 }

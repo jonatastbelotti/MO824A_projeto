@@ -12,6 +12,8 @@ public class Vertice {
     private Integer id;
     private Boolean isFonte = Boolean.FALSE;
     private List<Aresta> arestasDestino;
+    private Double PL_kw;
+    private Double QL_kvar;
 
     public Vertice(Integer id) {
         this.id = id;
@@ -36,6 +38,22 @@ public class Vertice {
 
     public List<Aresta> getArestasDestino() {
         return arestasDestino;
+    }
+
+    public Double getPL_kw() {
+        return PL_kw;
+    }
+
+    public void setPL_kw(Double PL_kw) {
+        this.PL_kw = PL_kw;
+    }
+
+    public Double getQL_kvar() {
+        return QL_kvar;
+    }
+
+    public void setQL_kvar(Double QL_kvar) {
+        this.QL_kvar = QL_kvar;
     }
 
 }

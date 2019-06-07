@@ -11,9 +11,6 @@ public class Aresta {
     private Vertice destino;
     private Double R;
     private Double X;
-    private Double PL_kw;
-    private Double QL_kvar;
-    private Boolean S_NS;
     private Boolean isChave = Boolean.FALSE;
 
     public Aresta(Integer id, Vertice origem, Vertice destino) {
@@ -28,18 +25,6 @@ public class Aresta {
 
     public void setX(Double X) {
         this.X = X;
-    }
-
-    public void setPL_kw(Double PL_kw) {
-        this.PL_kw = PL_kw;
-    }
-
-    public void setQL_kvar(Double QL_kvar) {
-        this.QL_kvar = QL_kvar;
-    }
-
-    public void setS_NS(Boolean S_NS) {
-        this.S_NS = S_NS;
     }
 
     public void setChave() {
@@ -64,18 +49,6 @@ public class Aresta {
 
     public Double getX() {
         return X;
-    }
-
-    public Double getPL_kw() {
-        return PL_kw;
-    }
-
-    public Double getQL_kvar() {
-        return QL_kvar;
-    }
-
-    public Boolean getS_NS() {
-        return S_NS;
     }
 
     public Boolean getIsChave() {

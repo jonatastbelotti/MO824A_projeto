@@ -16,4 +16,9 @@ public enum TipoSelecaoNovaPopulacao {
         this.eletismo = eletismo;
     }
 
+    @Override
+    public String toString() {
+        return this.nome;
+    }
+
 }

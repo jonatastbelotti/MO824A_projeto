@@ -119,9 +119,12 @@ public class Rede {
                 this.vertices[id_origem].addAresta(this.arestas[id]);
 
                 if (lendoAresta) {
-                    this.arestas[id].setPL_kw(Double.parseDouble(partes[PL_KW]));
-                    this.arestas[id].setQL_kvar(Double.parseDouble(partes[QL_KVAR]));
-                    this.arestas[id].setS_NS(partes[S_NS].equals("S"));
+                    this.arestas[id].getDestino().setPL_kw(Double.parseDouble(partes[PL_KW]));
+                    this.arestas[id].getDestino().setQL_kvar(Double.parseDouble(partes[QL_KVAR]));
+
+                    if (partes[S_NS].equals("S")) {
+                        this.arestas[id].setChave();
+                    }
                 }
 
                 if (lendoChave) {
@@ -150,7 +153,7 @@ public class Rede {
     public Integer getNumFontes() {
         return numFontes;
     }
-    
+
     public Aresta getAresta(Integer id) {
         return this.arestas[id];
     }
