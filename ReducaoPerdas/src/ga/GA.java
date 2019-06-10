@@ -1,5 +1,9 @@
 package ga;
 
+import ga.configuracoes.TipoCruzamento;
+import ga.configuracoes.TipoMutacao;
+import ga.configuracoes.TipoSelecao;
+import ga.configuracoes.TipoSelecaoNovaPopulacao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +20,20 @@ public class GA {
     private ArrayList<Cromossomo> populacao;
     private Cromossomo melhorSolucao;
     private Boolean verbose = Boolean.TRUE;
+    private TipoSelecao tipoSelecao;
+    private TipoCruzamento tipoCruzamento;
+    private TipoMutacao tipoMutacao;
+    private Double taxaMutacao = 0D;
+    private TipoSelecaoNovaPopulacao tipoSelecaoNovaPopulacao;
 
-    public GA(Rede rede, Integer tamPopulacao) {
+    public GA(Rede rede, Integer tamPopulacao, TipoSelecao selecao, TipoCruzamento cruzamento, TipoMutacao mutacao, Double taxMutacao, TipoSelecaoNovaPopulacao selecaoNovaPop) {
         this.rede = rede;
         this.tamPopulacao = tamPopulacao;
+        this.tipoSelecao = selecao;
+        this.tipoCruzamento = cruzamento;
+        this.tipoMutacao = mutacao;
+        this.taxaMutacao = taxMutacao;
+        this.tipoSelecaoNovaPopulacao = selecaoNovaPop;
     }
 
     public void setVerbose(Boolean verbose) {
@@ -122,11 +136,26 @@ public class GA {
         }
     }
 
+    @Override
+    public String toString() {
+        String resp = "Algoritmo Genético:";
+
+        resp += "\n Tamanho população = " + this.tamPopulacao;
+        resp += "\n Tipo seleção pais = " + this.tipoSelecao;
+        resp += "\n Tipo cruzamento = " + this.tipoCruzamento;
+        resp += "\n Tipo mutação = " + this.tipoMutacao;
+        resp += "\n Taxa mutação = " + this.taxaMutacao;
+        resp += "\n Seleção nova população = " + this.tipoSelecaoNovaPopulacao;
+
+        return resp;
+    }
+
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_29_1.pos";
+        String arquivo = "instances/bus_13_3.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, rede.getNumVertices());
+        GA ga = new GA(rede, rede.getNumVertices(), TipoSelecao.ROLETA, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.05D, TipoSelecaoNovaPopulacao.JUNCAO);
+        System.out.println(ga + "\n\nExecução:");
         Cromossomo resultado = ga.executar(60 * 1);
     }
 
