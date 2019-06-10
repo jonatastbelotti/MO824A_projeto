@@ -1,9 +1,5 @@
 package ga;
 
-import ga.configuracoes.TipoCruzamento;
-import ga.configuracoes.TipoMutacao;
-import ga.configuracoes.TipoSelecao;
-import ga.configuracoes.TipoSelecaoNovaPopulacao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,23 +13,13 @@ public class GA {
 
     private Rede rede;
     private Integer tamPopulacao;
-    private List<Cromossomo> populacao;
+    private ArrayList<Cromossomo> populacao;
     private Cromossomo melhorSolucao;
-    private TipoSelecao tipoSelecao;
-    private TipoCruzamento tipoCruzamento;
-    private TipoMutacao tipoMutacao;
-    private Double taxaMutacao;
-    private TipoSelecaoNovaPopulacao tipoSelecaoNovaPopulacao;
     private Boolean verbose = Boolean.TRUE;
 
-    public GA(Rede rede, Integer tamPopulacao, TipoSelecao tipoSelecao, TipoCruzamento tipoCruzamento, TipoMutacao tipoMutacao, Double taxaMutacao, TipoSelecaoNovaPopulacao tipoSelecaoNovaPopulacao) {
+    public GA(Rede rede, Integer tamPopulacao) {
         this.rede = rede;
         this.tamPopulacao = tamPopulacao;
-        this.tipoSelecao = tipoSelecao;
-        this.tipoCruzamento = tipoCruzamento;
-        this.tipoMutacao = tipoMutacao;
-        this.taxaMutacao = taxaMutacao;
-        this.tipoSelecaoNovaPopulacao = tipoSelecaoNovaPopulacao;
     }
 
     public void setVerbose(Boolean verbose) {
@@ -62,10 +48,10 @@ public class GA {
             geracao++;
 
             // selecionando pais para o cruzamento
-            List<Cromossomo> pais = this.selecionarPais(this.populacao);
+            ArrayList<Cromossomo> pais = this.selecionarPais(this.populacao);
 
             // gerando os filhos através do cruzamento
-            List<Cromossomo> filhos = this.realizarCruzamento(pais);
+            ArrayList<Cromossomo> filhos = this.realizarCruzamento(pais);
 
             // realizando mutação
             filhos = this.realizarMutacao(filhos);
@@ -105,7 +91,6 @@ public class GA {
     private Cromossomo buscarMelhorCromossomo(List<Cromossomo> pop) {
         Cromossomo resp = pop.get(0);
 
-        // percorre todos os cromossomos buscando o melhor
         for (Cromossomo c : pop) {
             if (c.getFitness() < resp.getFitness()) {
                 resp = c;
@@ -115,32 +100,33 @@ public class GA {
         return resp;
     }
 
+    private ArrayList<Cromossomo> selecionarPais(ArrayList<Cromossomo> populacao) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private ArrayList<Cromossomo> realizarCruzamento(ArrayList<Cromossomo> pais) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private ArrayList<Cromossomo> realizarMutacao(ArrayList<Cromossomo> filhos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private ArrayList<Cromossomo> selecionarNovaPopulacao(ArrayList<Cromossomo> filhos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private void imprimirResultadoAtual(Integer geracao, Cromossomo sol) {
         if (this.verbose) {
             System.out.printf("[Gera. %d] (Fit. %f)", geracao, sol.getFitness());
         }
     }
 
-    @Override
-    public String toString() {
-        String resp = "Algoritmo Genético:";
-        
-        resp += "\n Tamanho população = " + this.tamPopulacao;
-        resp += "\n Tipo seleção pais = " + this.tipoSelecao;
-        resp += "\n Tipo cruzamento = " + this.tipoCruzamento;
-        resp += "\n Tipo mutação = " + this.tipoMutacao;
-        resp += "\n Taxa mutação = " + this.taxaMutacao;
-        resp += "\n Seleção nova população = " + this.tipoSelecaoNovaPopulacao;
-        
-        return resp;
-    }
-
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_13_3.pos";
+        String arquivo = "instances/bus_29_1.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, rede.getNumVertices(), TipoSelecao.ROLETA, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.05D, TipoSelecaoNovaPopulacao.JUNCAO);
-        System.out.println(ga + "\nExecução:");
+        GA ga = new GA(rede, rede.getNumVertices());
         Cromossomo resultado = ga.executar(60 * 1);
     }
 

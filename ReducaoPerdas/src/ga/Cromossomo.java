@@ -1,11 +1,10 @@
 package ga;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import rede.Aresta;
+import rede.Potencia;
 import rede.Rede;
-import rede.kruskal.ArestaKruskal;
 import rede.kruskal.Kruskal;
 
 /**
@@ -32,29 +31,73 @@ public class Cromossomo extends ArrayList<Integer> {
 
     void calcularFitness(Rede rede) {
         // extraindo a árvore geradora de custo mínimo
-        extrairArvore(rede);
+        Rede arvoreRede = extrairArvore(rede);
 
+        // Calculando perda
+        Double perda = calcularPerda(arvoreRede);
+
+        fitness = perda;
     }
 
     public Double getFitness() {
         return fitness;
     }
 
-    private void extrairArvore(Rede rede) {
+    private Rede extrairArvore(Rede rede) {
         Kruskal kruskal;
-        List<ArestaKruskal> listArestas = new ArrayList<>();
-        
-//      // Criando lista de arestas com os pesos do cromossomo
+
+        // Atualizando os pesos das arestas com os genes do cromossomo
         for (int i = 0; i < this.size(); i++) {
-            Aresta a = rede.getAresta(i);
-            ArestaKruskal aresta = new ArestaKruskal(a.getId(), a.getOrigem().getId(), a.getDestino().getId(), this.get(i));
-            listArestas.add(aresta);
+            rede.getAresta(i).setPeso(this.get(i));
         }
-        
+
         // instanciando objeto Kruskal
-        kruskal = new Kruskal(rede.getNumVertices(), rede.getNumArestas(), listArestas);
-        
-        System.out.println(kruskal.executar());
+        kruskal = new Kruskal(rede);
+
+        return kruskal.executar();
+    }
+
+    private Double calcularPerda(Rede arvore) {
+        Double p = 0D;
+
+        // Calculando a potencia total em cada aresta
+        calcularPotencias(arvore);
+
+        // Passa por todas as arestas somando a perda de cada uma
+        for (Aresta a : arvore.getArestas()) {
+            p += a.getR() * Math.pow(a.potencia.PL + a.potencia.QL, 2D);
+        }
+
+        return p;
+    }
+
+    private void calcularPotencias(Rede arvore) {
+        for (Aresta aresta : arvore.getArestasSaindoDe()[arvore.getNumVertices() - 1]) {
+            aresta.potencia = calcPotenciaAresta(arvore, aresta);
+        }
+    }
+
+    private Potencia calcPotenciaAresta(Rede arvore, Aresta aresta) {
+        aresta.potencia = new Potencia();
+
+        // Iniciando com os valores do vertice de destino
+        aresta.potencia.PL = aresta.getDestino().getCarga_PL_kw();
+        aresta.potencia.QL = aresta.getDestino().getCarga_QL_kvar();
+
+        // Somando com a potencias de todas as arestas que partem do vertice de destino
+        for (Aresta aresta_aux : arvore.getArestasSaindoDe()[aresta.getDestino().getId()]) {
+            Potencia p_aux = calcPotenciaAresta(arvore, aresta_aux);
+
+            aresta.potencia.PL += p_aux.PL;
+            aresta.potencia.QL += p_aux.QL;
+        }
+
+        return aresta.potencia;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " fitness = " + fitness;
     }
 
 }

@@ -9,14 +9,18 @@ public class Aresta {
     private Integer id;
     private Vertice origem;
     private Vertice destino;
-    private Double R;
-    private Double X;
+    private Double R = 0D;
+    private Double X = 0D;
+    private Boolean S_NS;
     private Boolean isChave = Boolean.FALSE;
+    private Integer peso = -1;
+    public Potencia potencia;
 
     public Aresta(Integer id, Vertice origem, Vertice destino) {
         this.id = id;
         this.origem = origem;
         this.destino = destino;
+        potencia = new Potencia();
     }
 
     public void setR(Double R) {
@@ -25,6 +29,10 @@ public class Aresta {
 
     public void setX(Double X) {
         this.X = X;
+    }
+
+    public void setS_NS(Boolean S_NS) {
+        this.S_NS = S_NS;
     }
 
     public void setChave() {
@@ -51,13 +59,27 @@ public class Aresta {
         return X;
     }
 
+    public Boolean getS_NS() {
+        return S_NS;
+    }
+
     public Boolean getIsChave() {
         return isChave;
     }
 
+    public void setPeso(Integer peso) {
+        this.peso = peso;
+    }
+
+    public Integer getPeso() {
+        return peso;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "" + id;
+        return "" + id + " -> ori: " + origem.getId() + " dest: " + destino.getId() + " peso: " + peso;
     }
 
 }

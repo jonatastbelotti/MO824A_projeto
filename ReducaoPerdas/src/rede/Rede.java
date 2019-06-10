@@ -3,6 +3,7 @@ package rede;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -11,15 +12,68 @@ import java.util.Arrays;
  */
 public class Rede {
 
-    private Integer numVertices;
-    private Integer numArestas;
-    private Integer numChaves;
-    private Integer numFontes;
+    private Integer numVertices = 0;
+    private Integer numArestas = 0;
+    private Integer numChaves = 0;
+    private Integer numFontes = 0;
     private Vertice[] vertices;
-    private Aresta[] arestas;
+    private ArrayList<Aresta> arestas;
+    private ArrayList<Aresta>[] arestasSaindoDe;
+    private ArrayList<Vertice> fontes;
+    private Vertice origem;
+
+    public Rede(Integer numVertices) {
+        this.iniciarRede(numVertices);
+    }
 
     public Rede(String nomeArquivo) throws IOException {
         carregarArquivo(nomeArquivo);
+    }
+
+    private void iniciarRede(Integer numVertices) {
+        this.numVertices = numVertices;
+        this.vertices = new Vertice[this.numVertices];
+        this.arestas = new ArrayList<>();
+        this.arestasSaindoDe = new ArrayList[this.numVertices];
+        this.fontes = new ArrayList<>();
+
+        // Iniciando vetor de vertices
+        for (int i = 0; i < this.vertices.length; i++) {
+            this.vertices[i] = new Vertice(i);
+        }
+
+        // Iniciando lista de arestas
+        while (this.arestas.size() < this.numArestas) {
+            this.arestas.add(null);
+        }
+
+        // Iniciando lista de adjacencia
+        for (int i = 0; i < this.arestasSaindoDe.length; i++) {
+            this.arestasSaindoDe[i] = new ArrayList<>();
+        }
+    }
+
+    private void adicionarAresta(Aresta aresta) {
+        while (this.arestas.size() < aresta.getId() + 1) {
+            this.arestas.add(null);
+        }
+
+        this.arestas.set(aresta.getId(), aresta);
+        this.arestasSaindoDe[aresta.getOrigem().getId()].add(aresta);
+    }
+
+    public void addAresta(Aresta aresta) {
+        this.arestas.add(aresta);
+        this.arestasSaindoDe[aresta.getOrigem().getId()].add(aresta);
+    }
+
+    private void adicionarFonte(int codVertice) {
+        this.vertices[codVertice].setFonte();
+        this.fontes.add(this.vertices[codVertice]);
+
+        // Adicionando uma aresta entre o novo vertice
+        Aresta aresta = new Aresta(this.arestas.size(), origem, this.vertices[codVertice]);
+        adicionarAresta(aresta);
     }
 
     /**
@@ -56,23 +110,24 @@ public class Rede {
                         break;
                     case ".Branch_count":
                         this.numArestas = Integer.parseInt(partes[1]);
-                        this.arestas = new Aresta[this.numArestas];
+                        this.arestas = new ArrayList<>();
+
+                        while (this.arestas.size() < this.numArestas) {
+                            this.arestas.add(null);
+                        }
                         break;
                     case ".Nodes":
-                        this.numVertices = Integer.parseInt(partes[1]);
-                        this.vertices = new Vertice[numVertices];
-
-                        for (int i = 0; i < this.vertices.length; i++) {
-                            this.vertices[i] = new Vertice(i);
-                        }
-
+                        this.iniciarRede(Integer.parseInt(partes[1]) + 1);
+                        this.origem = this.vertices[this.vertices.length - 1];
                         break;
                     case ".Feeders":
                         this.numFontes = Integer.parseInt(partes[1]);
                         break;
                     case ".Feeder_node_ids":
                     case ".Feder_node_ids":
-                        Arrays.stream(partes, 1, partes.length).forEach(p -> vertices[Integer.parseInt(p)].setFonte());
+                        Arrays.stream(partes, 1, partes.length).forEach(p -> {
+                            adicionarFonte(Integer.parseInt(p));
+                        });
                         break;
                     case ".Branch":
                         lendoAresta = Boolean.TRUE;
@@ -113,23 +168,20 @@ public class Rede {
                 id_origem = Integer.parseInt(partes[SRC_BUS]);
                 id_destino = Integer.parseInt(partes[REC_BUS]);
 
-                this.arestas[id] = new Aresta(id, this.vertices[id_origem], this.vertices[id_destino]);
-                this.arestas[id].setR(Double.parseDouble(partes[R]));
-                this.arestas[id].setX(Double.parseDouble(partes[X]));
-                this.vertices[id_origem].addAresta(this.arestas[id]);
+                Aresta aresta = new Aresta(id, this.vertices[id_origem], this.vertices[id_destino]);
+                aresta.setR(Double.parseDouble(partes[R]));
+                aresta.setX(Double.parseDouble(partes[X]));
 
                 if (lendoAresta) {
-                    this.arestas[id].getDestino().setPL_kw(Double.parseDouble(partes[PL_KW]));
-                    this.arestas[id].getDestino().setQL_kvar(Double.parseDouble(partes[QL_KVAR]));
-
-                    if (partes[S_NS].equals("S")) {
-                        this.arestas[id].setChave();
-                    }
+                    aresta.getDestino().setPotencias(Double.parseDouble(partes[PL_KW]), Double.parseDouble(partes[QL_KVAR]));
+                    aresta.setS_NS(partes[S_NS].equals("S"));
                 }
 
                 if (lendoChave) {
-                    this.arestas[id].setChave();
+                    aresta.setChave();
                 }
+
+                adicionarAresta(aresta);
             }
 
             // lendo a próxima linha
@@ -142,8 +194,20 @@ public class Rede {
         return numVertices;
     }
 
+    public Vertice[] getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(Vertice[] vertices) {
+        this.vertices = vertices;
+    }
+
     public Integer getNumArestas() {
         return numArestas;
+    }
+
+    public Integer getSizeArestas() {
+        return this.arestas.size();
     }
 
     public Integer getNumChaves() {
@@ -154,8 +218,16 @@ public class Rede {
         return numFontes;
     }
 
+    public ArrayList<Aresta> getArestas() {
+        return arestas;
+    }
+
     public Aresta getAresta(Integer id) {
-        return this.arestas[id];
+        return this.arestas.get(id);
+    }
+
+    public ArrayList<Aresta>[] getArestasSaindoDe() {
+        return arestasSaindoDe;
     }
 
     @Override
@@ -170,7 +242,7 @@ public class Rede {
     }
 
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_10476_84.pos";
+        String arquivo = "instances/bus_83_11.pos";
 
         Rede rede = new Rede(arquivo);
         System.out.println(rede);

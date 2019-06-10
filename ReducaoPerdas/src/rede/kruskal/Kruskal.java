@@ -2,9 +2,12 @@ package rede.kruskal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
+import rede.Aresta;
+import rede.Rede;
 
 /**
  *
@@ -12,28 +15,29 @@ import java.util.Objects;
  */
 public class Kruskal {
 
-    private Integer numVertices;
-    private Integer numArestas;
-    private List<ArestaKruskal> arestas;
+    private Rede grafo;
+    private ArrayList<Aresta> arestasOrdenadas;
 
-    public Kruskal(Integer numVertices, Integer numArestas, List<ArestaKruskal> arestas) {
-        this.numVertices = numVertices;
-        this.numArestas = numArestas;
-        this.arestas = arestas;
+    public Kruskal(Rede grafoComPesos) {
+        this.grafo = grafoComPesos;
+        this.arestasOrdenadas = new ArrayList<>(this.grafo.getArestas());
 
         // ordenando as arestas para a execução do Kruskal
-        this.arestas.sort(new Comparator<ArestaKruskal>() {
+        Collections.sort(arestasOrdenadas, new Comparator<Aresta>() {
             @Override
-            public int compare(ArestaKruskal o1, ArestaKruskal o2) {
+            public int compare(Aresta o1, Aresta o2) {
                 return o1.getPeso().compareTo(o2.getPeso());
             }
         });
     }
 
-    public List<ArestaKruskal> executar() {
-        Integer[] chefes = new Integer[numVertices];
-        Integer[] tamComponentes = new Integer[numVertices];
-        List<ArestaKruskal> arvore = new ArrayList<>();
+    public Rede executar() {
+        Integer[] chefes = new Integer[grafo.getNumVertices()];
+        Integer[] tamComponentes = new Integer[grafo.getNumVertices()];
+
+        // Inciando árvore com todos os vértices
+        Rede arvore = new Rede(grafo.getNumVertices());
+        arvore.setVertices(grafo.getVertices());
 
         // denifindo cada vértice como seu chefe e o tamanho de cada componente como 1
         for (int i = 0; i < chefes.length; i++) {
@@ -42,10 +46,10 @@ public class Kruskal {
         Arrays.fill(tamComponentes, 1);
 
         // percorrendo cada aresta do grafo em ordem crescente
-        for (ArestaKruskal aresta : arestas) {
+        for (Aresta aresta : arestasOrdenadas) {
             // buscando quem é o chefe de cada vértica da aresta
-            int ch1 = buscaChefe(chefes, aresta.getOrigem());
-            int ch2 = buscaChefe(chefes, aresta.getDestino());
+            int ch1 = buscaChefe(chefes, aresta.getOrigem().getId());
+            int ch2 = buscaChefe(chefes, aresta.getDestino().getId());
 
             // se os chefes dos dois vértices forem o mesmo significa que essa aresta fecha ciclo
             if (ch1 == ch2) {
@@ -53,7 +57,7 @@ public class Kruskal {
             }
 
             // a aresta não fecha ciclo, deve ser inserida na árvores
-            arvore.add(aresta);
+            arvore.addAresta(aresta);
 
             // A maior componente passa a ser a chefe da menor
             if (tamComponentes[ch1] >= tamComponentes[ch2]) {
@@ -65,11 +69,11 @@ public class Kruskal {
             }
 
             // se a árvore tem (numVertices - 1) arestas ela já é completa
-            if (arvore.size() == numVertices - 1) {
+            if (arvore.getSizeArestas() == arvore.getNumVertices() - 1) {
                 break;
             }
         }
-        
+
         return arvore;
     }
 
