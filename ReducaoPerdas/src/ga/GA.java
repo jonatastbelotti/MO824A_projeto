@@ -6,7 +6,10 @@ import ga.configuracoes.TipoSelecao;
 import ga.configuracoes.TipoSelecaoNovaPopulacao;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import rede.Rede;
 
 /**
@@ -114,8 +117,15 @@ public class GA {
         return resp;
     }
 
-    private ArrayList<Cromossomo> selecionarPais(ArrayList<Cromossomo> populacao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private ArrayList<Cromossomo> selecionarPais(ArrayList<Cromossomo> pop) {
+        switch (tipoSelecao) {
+            case ROLETA:
+                return selecionarPaisRoleta(pop);
+            case TORNEIO:
+                return selecionarPaisTorneio(pop);
+            default:
+                return selecionarPaisRoleta(pop);
+        }
     }
 
     private ArrayList<Cromossomo> realizarCruzamento(ArrayList<Cromossomo> pais) {
@@ -128,6 +138,62 @@ public class GA {
 
     private ArrayList<Cromossomo> selecionarNovaPopulacao(ArrayList<Cromossomo> filhos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private ArrayList<Cromossomo> selecionarPaisRoleta(ArrayList<Cromossomo> pop) {
+        ArrayList<Cromossomo> pais = new ArrayList<>();
+        Random random = new Random();
+        Double somaTotal = 0D;
+        Double sorteio = 0D;
+        Double soma = 0D;
+
+        // calculando probabilidades de cada cromossomo ser selecionado
+        for (Cromossomo c : pop) {
+            somaTotal += 1D / (1D + c.getFitness());
+        }
+        
+        // embaralhando população
+        Collections.shuffle(pop);
+        
+        // Selecionando os pais
+        while (pais.size() < pop.size()) {
+            // sorteando um número
+            sorteio = random.nextDouble() * somaTotal;
+            soma = 0D;
+            
+            for (Cromossomo c : pop) {
+                soma += 1D / (1D + c.getFitness());
+                
+                if (soma >= sorteio) {
+                    pais.add(c);
+                    break;
+                }
+            }
+        }
+        
+        return pais;
+    }
+
+    private ArrayList<Cromossomo> selecionarPaisTorneio(ArrayList<Cromossomo> pop) {
+        ArrayList<Cromossomo> pais = new ArrayList<>();
+        Random random = new Random();
+        Cromossomo c1, c2;
+        
+        // Selecionando os pais
+        while (pais.size() < pop.size()) {
+            c1 = pop.get(random.nextInt(pop.size()));
+            c2 = pop.get(random.nextInt(pop.size()));
+            
+            // O vencedor é o com menor fitness
+            if (c1.getFitness() < c2.getFitness()) {
+                pais.add(c1);
+            } else {
+                pais.add(c2);
+            }
+            
+        }
+        
+        return pais;
     }
 
     private void imprimirResultadoAtual(Integer geracao, Cromossomo sol) {
