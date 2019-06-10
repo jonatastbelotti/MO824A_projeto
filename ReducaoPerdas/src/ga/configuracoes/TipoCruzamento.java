@@ -7,7 +7,8 @@ package ga.configuracoes;
 public enum TipoCruzamento {
     PONTO_2("2 Pontos", 2),
     PONTO_3("2 Pontos", 3),
-    PONTO_4("2 Pontos", 4);
+    PONTO_4("2 Pontos", 4),
+    UNIFORME("Uniforme", 0);
 
     public String nome;
     public int pontos;

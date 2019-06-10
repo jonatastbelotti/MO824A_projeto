@@ -6,7 +6,6 @@ import ga.configuracoes.TipoSelecao;
 import ga.configuracoes.TipoSelecaoNovaPopulacao;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -129,7 +128,15 @@ public class GA {
     }
 
     private ArrayList<Cromossomo> realizarCruzamento(ArrayList<Cromossomo> pais) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (tipoCruzamento) {
+            case PONTO_2:
+            case PONTO_3:
+            case PONTO_4:
+                return realizarCruzamentoPonto(pais, tipoCruzamento.pontos);
+            case UNIFORME:
+            default:
+                return realizarCruzamentoUniforme(pais);
+        }
     }
 
     private ArrayList<Cromossomo> realizarMutacao(ArrayList<Cromossomo> filhos) {
@@ -151,26 +158,26 @@ public class GA {
         for (Cromossomo c : pop) {
             somaTotal += 1D / (1D + c.getFitness());
         }
-        
+
         // embaralhando população
         Collections.shuffle(pop);
-        
+
         // Selecionando os pais
         while (pais.size() < pop.size()) {
             // sorteando um número
             sorteio = random.nextDouble() * somaTotal;
             soma = 0D;
-            
+
             for (Cromossomo c : pop) {
                 soma += 1D / (1D + c.getFitness());
-                
+
                 if (soma >= sorteio) {
                     pais.add(c);
                     break;
                 }
             }
         }
-        
+
         return pais;
     }
 
@@ -178,22 +185,59 @@ public class GA {
         ArrayList<Cromossomo> pais = new ArrayList<>();
         Random random = new Random();
         Cromossomo c1, c2;
-        
+
         // Selecionando os pais
         while (pais.size() < pop.size()) {
             c1 = pop.get(random.nextInt(pop.size()));
             c2 = pop.get(random.nextInt(pop.size()));
-            
+
             // O vencedor é o com menor fitness
             if (c1.getFitness() < c2.getFitness()) {
                 pais.add(c1);
             } else {
                 pais.add(c2);
             }
+
+        }
+
+        return pais;
+    }
+    
+    private ArrayList<Cromossomo> realizarCruzamentoPonto(ArrayList<Cromossomo> pais, int pontos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private ArrayList<Cromossomo> realizarCruzamentoUniforme(ArrayList<Cromossomo> pais) {
+        Random random = new Random();
+        ArrayList<Cromossomo> filhos = new ArrayList<>();
+        Cromossomo p1, p2, f1, f2;
+        
+        // percorrendo todos os pares de pais
+        for (int i = 0; i < pais.size(); i += 2) {
+            p1 = pais.get(i);
+            p2 = pais.get(i+1);
             
+            f1 = new Cromossomo();
+            f2 = new Cromossomo();
+            
+            // percorrendo cada gene dos pais
+            for (int j = 0; j < p1.size(); j++) {
+                // verificando que filho recebe o gene de que pai
+                if (random.nextBoolean()) {
+                    f1.add(p1.get(j));
+                    f2.add(p2.get(j));
+                } else {
+                    f2.add(p1.get(j));
+                    f1.add(p2.get(j));
+                }
+            }
+            
+            // adicionando os novos filhos
+            filhos.add(f1);
+            filhos.add(f2);
         }
         
-        return pais;
+        return filhos;
     }
 
     private void imprimirResultadoAtual(Integer geracao, Cromossomo sol) {

@@ -15,6 +15,10 @@ public class Cromossomo extends ArrayList<Integer> {
 
     private Double fitness = Double.POSITIVE_INFINITY;
 
+    public Cromossomo() {
+        super();
+    }
+
     public Cromossomo(Integer numGenes) {
         super();
         Random random = new Random();
