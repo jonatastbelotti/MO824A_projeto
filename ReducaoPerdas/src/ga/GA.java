@@ -380,7 +380,7 @@ public class GA {
 //        arquivo = "instances/bus_83_11.pos";
 //        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
-//        arquivo = "instances/bus_873_7.pos";
+        arquivo = "instances/bus_873_7.pos";
 //        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
