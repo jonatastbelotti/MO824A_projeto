@@ -36,6 +36,10 @@ public class GA {
         this.tipoMutacao = mutacao;
         this.taxaMutacao = taxMutacao;
         this.tipoSelecaoNovaPopulacao = selecaoNovaPop;
+        
+        if (this.tamPopulacao % 2 == 1) {
+            this.tamPopulacao++;
+        }
     }
 
     public void setVerbose(Boolean verbose) {
@@ -70,6 +74,7 @@ public class GA {
             ArrayList<Cromossomo> filhos = this.realizarCruzamento(pais);
 
             // realizando mutação
+            calcularTaxaMutacao(populacao);
             filhos = this.realizarMutacao(filhos);
 
             // avalia novos individuos
@@ -139,8 +144,22 @@ public class GA {
         }
     }
 
-    private ArrayList<Cromossomo> realizarMutacao(ArrayList<Cromossomo> filhos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private ArrayList<Cromossomo> realizarMutacao(ArrayList<Cromossomo> pop) {
+        Random random = new Random();
+        Cromossomo c;
+
+        // Verifica quantos genes sofrerão mutação
+        int quantMutacao = (int) (pop.size() * taxaMutacao);
+
+        for (int n = 0; n < quantMutacao; n++) {
+            // seleciona o cromossomo
+            c = pop.get(random.nextInt(pop.size()));
+
+            // seleciona o gene do cromossomo e realiza a mutação
+            c.set(random.nextInt(c.size()), random.nextInt(rede.getNumArestas()));
+        }
+
+        return pop;
     }
 
     private ArrayList<Cromossomo> selecionarNovaPopulacao(ArrayList<Cromossomo> filhos) {
@@ -227,7 +246,7 @@ public class GA {
                     p1 = p2;
                     p2 = p_aux;
                 }
-                
+
                 f1.add(p1.get(j));
                 f2.add(p2.get(j));
             }
@@ -273,6 +292,36 @@ public class GA {
         return filhos;
     }
 
+    private void calcularTaxaMutacao(ArrayList<Cromossomo> pop) {
+        // Se for mutação adaptativa tem que recalcular a taxa de mutação antes
+        if (tipoMutacao == TipoMutacao.ADAPTATIVA) {
+            double media = 0D;
+            double maior = 0D;
+            
+            // calculando media e buscando maior
+            for (Cromossomo c : pop) {
+                media += c.getFitness();
+                
+                if (c.getFitness() > maior) {
+                    maior = c.getFitness();
+                }
+            }
+            media /= pop.size();
+            
+            // calculando desvio padrão
+            double desvio = 0D;
+            for (Cromossomo c : pop) {
+                desvio += Math.pow(c.getFitness() - media, 2D);
+            }
+            desvio = Math.sqrt(desvio / pop.size()) / maior;
+            
+            // Recalculando taxa de mutação
+            taxaMutacao = tipoMutacao.valMaximo * (1D - desvio);
+            
+            System.out.println(taxaMutacao);
+        }
+    }
+
     private void imprimirResultadoAtual(Integer geracao, Cromossomo sol) {
         if (this.verbose) {
             System.out.printf("[Gera. %d] (Fit. %f)", geracao, sol.getFitness());
@@ -297,7 +346,7 @@ public class GA {
         String arquivo = "instances/bus_13_3.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, rede.getNumVertices(), TipoSelecao.ROLETA, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.05D, TipoSelecaoNovaPopulacao.JUNCAO);
+        GA ga = new GA(rede, rede.getNumArestas(), TipoSelecao.ROLETA, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.05D, TipoSelecaoNovaPopulacao.JUNCAO);
         System.out.println(ga + "\n\nExecução:");
         Cromossomo resultado = ga.executar(60 * 1);
     }
