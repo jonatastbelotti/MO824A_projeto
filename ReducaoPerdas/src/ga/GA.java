@@ -376,15 +376,15 @@ public class GA {
         String arquivo;
         arquivo = "instances/bus_13_3.pos";
         arquivo = "instances/bus_29_1.pos";
-//        arquivo = "instances/bus_32_1.pos";
-//        arquivo = "instances/bus_83_11.pos";
-//        arquivo = "instances/bus_135_8.pos";
+////        arquivo = "instances/bus_32_1.pos";
+        arquivo = "instances/bus_83_11.pos";
+////        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
         arquivo = "instances/bus_873_7.pos";
-//        arquivo = "instances/bus_10476_84.pos";
+////        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, 30, TipoSelecao.TORNEIO, TipoCruzamento.PONTO_4, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO);
+        GA ga = new GA(rede, 200, TipoSelecao.TORNEIO, TipoCruzamento.PONTO_4, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO);
         System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
         Cromossomo resultado = ga.executar(60 * 10);
     }
