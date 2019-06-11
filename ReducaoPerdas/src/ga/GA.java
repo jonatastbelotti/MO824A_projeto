@@ -202,24 +202,57 @@ public class GA {
 
         return pais;
     }
-    
+
     private ArrayList<Cromossomo> realizarCruzamentoPonto(ArrayList<Cromossomo> pais, int pontos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Cromossomo> filhos = new ArrayList<>();
+        Cromossomo p1, p2, p_aux, f1, f2;
+        int tamPonto, limitePonto;
+
+        // percorrendo todos os pares de pais
+        for (int i = 0; i < pais.size(); i += 2) {
+            p1 = pais.get(i);
+            p2 = pais.get(i + 1);
+
+            f1 = new Cromossomo();
+            f2 = new Cromossomo();
+
+            tamPonto = limitePonto = p1.size() / pontos;
+
+            // percorrendo cada gene dos pais
+            for (int j = 0; j < p1.size(); j++) {
+                // verificando se trocou de ponto
+                if (j >= limitePonto) {
+                    limitePonto += tamPonto;
+                    p_aux = p1;
+                    p1 = p2;
+                    p2 = p_aux;
+                }
+                
+                f1.add(p1.get(j));
+                f2.add(p2.get(j));
+            }
+
+            // adicionando os novos filhos
+            filhos.add(f1);
+            filhos.add(f2);
+        }
+
+        return filhos;
     }
 
     private ArrayList<Cromossomo> realizarCruzamentoUniforme(ArrayList<Cromossomo> pais) {
         Random random = new Random();
         ArrayList<Cromossomo> filhos = new ArrayList<>();
         Cromossomo p1, p2, f1, f2;
-        
+
         // percorrendo todos os pares de pais
         for (int i = 0; i < pais.size(); i += 2) {
             p1 = pais.get(i);
-            p2 = pais.get(i+1);
-            
+            p2 = pais.get(i + 1);
+
             f1 = new Cromossomo();
             f2 = new Cromossomo();
-            
+
             // percorrendo cada gene dos pais
             for (int j = 0; j < p1.size(); j++) {
                 // verificando que filho recebe o gene de que pai
@@ -231,12 +264,12 @@ public class GA {
                     f1.add(p2.get(j));
                 }
             }
-            
+
             // adicionando os novos filhos
             filhos.add(f1);
             filhos.add(f2);
         }
-        
+
         return filhos;
     }
 
