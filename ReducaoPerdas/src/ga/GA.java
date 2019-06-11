@@ -19,7 +19,7 @@ public class GA {
 
     private Rede rede;
     private Integer tamPopulacao;
-    private ArrayList<Cromossomo> populacao;
+    private List<Cromossomo> populacao;
     private Cromossomo melhorSolucao;
     private Boolean verbose = Boolean.TRUE;
     private TipoSelecao tipoSelecao;
@@ -36,7 +36,7 @@ public class GA {
         this.tipoMutacao = mutacao;
         this.taxaMutacao = taxMutacao;
         this.tipoSelecaoNovaPopulacao = selecaoNovaPop;
-        
+
         if (this.tamPopulacao % 2 == 1) {
             this.tamPopulacao++;
         }
@@ -68,10 +68,10 @@ public class GA {
             geracao++;
 
             // selecionando pais para o cruzamento
-            ArrayList<Cromossomo> pais = this.selecionarPais(this.populacao);
+            List<Cromossomo> pais = this.selecionarPais(this.populacao);
 
             // gerando os filhos através do cruzamento
-            ArrayList<Cromossomo> filhos = this.realizarCruzamento(pais);
+            List<Cromossomo> filhos = this.realizarCruzamento(pais);
 
             // realizando mutação
             calcularTaxaMutacao(populacao);
@@ -81,7 +81,7 @@ public class GA {
             this.avaliarPopulacao(filhos);
 
             // seleciona nova população
-            this.populacao = this.selecionarNovaPopulacao(filhos);
+            this.populacao = this.selecionarNovaPopulacao(this.populacao, filhos);
 
             // atualizando melhor solução
             Cromossomo atual = this.buscarMelhorCromossomo(this.populacao);
@@ -96,7 +96,7 @@ public class GA {
     }
 
     private void iniciarPopulacao() {
-        this.populacao = new ArrayList<Cromossomo>();
+        this.populacao = new ArrayList<>();
 
         while (this.populacao.size() < this.tamPopulacao) {
             this.populacao.add(new Cromossomo(this.rede.getNumArestas()));
@@ -121,7 +121,7 @@ public class GA {
         return resp;
     }
 
-    private ArrayList<Cromossomo> selecionarPais(ArrayList<Cromossomo> pop) {
+    private List<Cromossomo> selecionarPais(List<Cromossomo> pop) {
         switch (tipoSelecao) {
             case ROLETA:
                 return selecionarPaisRoleta(pop);
@@ -132,7 +132,7 @@ public class GA {
         }
     }
 
-    private ArrayList<Cromossomo> realizarCruzamento(ArrayList<Cromossomo> pais) {
+    private List<Cromossomo> realizarCruzamento(List<Cromossomo> pais) {
         switch (tipoCruzamento) {
             case PONTO_2:
             case PONTO_3:
@@ -144,7 +144,7 @@ public class GA {
         }
     }
 
-    private ArrayList<Cromossomo> realizarMutacao(ArrayList<Cromossomo> pop) {
+    private List<Cromossomo> realizarMutacao(List<Cromossomo> pop) {
         Random random = new Random();
         Cromossomo c;
 
@@ -162,12 +162,18 @@ public class GA {
         return pop;
     }
 
-    private ArrayList<Cromossomo> selecionarNovaPopulacao(ArrayList<Cromossomo> filhos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private List<Cromossomo> selecionarNovaPopulacao(List<Cromossomo> pop, List<Cromossomo> filhos) {
+        switch (tipoSelecaoNovaPopulacao) {
+            case JUNCAO:
+                return juntarPopulacoes(pop, filhos);
+            case SUBSTITUICAO:
+            default:
+                return substituirPopulacao(pop, filhos, tipoSelecaoNovaPopulacao.eletismo);
+        }
     }
 
-    private ArrayList<Cromossomo> selecionarPaisRoleta(ArrayList<Cromossomo> pop) {
-        ArrayList<Cromossomo> pais = new ArrayList<>();
+    private List<Cromossomo> selecionarPaisRoleta(List<Cromossomo> pop) {
+        List<Cromossomo> pais = new ArrayList<>();
         Random random = new Random();
         Double somaTotal = 0D;
         Double sorteio = 0D;
@@ -200,8 +206,8 @@ public class GA {
         return pais;
     }
 
-    private ArrayList<Cromossomo> selecionarPaisTorneio(ArrayList<Cromossomo> pop) {
-        ArrayList<Cromossomo> pais = new ArrayList<>();
+    private List<Cromossomo> selecionarPaisTorneio(List<Cromossomo> pop) {
+        List<Cromossomo> pais = new ArrayList<>();
         Random random = new Random();
         Cromossomo c1, c2;
 
@@ -222,8 +228,8 @@ public class GA {
         return pais;
     }
 
-    private ArrayList<Cromossomo> realizarCruzamentoPonto(ArrayList<Cromossomo> pais, int pontos) {
-        ArrayList<Cromossomo> filhos = new ArrayList<>();
+    private List<Cromossomo> realizarCruzamentoPonto(List<Cromossomo> pais, int pontos) {
+        List<Cromossomo> filhos = new ArrayList<>();
         Cromossomo p1, p2, p_aux, f1, f2;
         int tamPonto, limitePonto;
 
@@ -259,9 +265,9 @@ public class GA {
         return filhos;
     }
 
-    private ArrayList<Cromossomo> realizarCruzamentoUniforme(ArrayList<Cromossomo> pais) {
+    private List<Cromossomo> realizarCruzamentoUniforme(List<Cromossomo> pais) {
         Random random = new Random();
-        ArrayList<Cromossomo> filhos = new ArrayList<>();
+        List<Cromossomo> filhos = new ArrayList<>();
         Cromossomo p1, p2, f1, f2;
 
         // percorrendo todos os pares de pais
@@ -292,39 +298,63 @@ public class GA {
         return filhos;
     }
 
-    private void calcularTaxaMutacao(ArrayList<Cromossomo> pop) {
+    private void calcularTaxaMutacao(List<Cromossomo> pop) {
         // Se for mutação adaptativa tem que recalcular a taxa de mutação antes
         if (tipoMutacao == TipoMutacao.ADAPTATIVA) {
             double media = 0D;
             double maior = 0D;
-            
+
             // calculando media e buscando maior
             for (Cromossomo c : pop) {
                 media += c.getFitness();
-                
+
                 if (c.getFitness() > maior) {
                     maior = c.getFitness();
                 }
             }
             media /= pop.size();
-            
+
             // calculando desvio padrão
             double desvio = 0D;
             for (Cromossomo c : pop) {
                 desvio += Math.pow(c.getFitness() - media, 2D);
             }
             desvio = Math.sqrt(desvio / pop.size()) / maior;
-            
+
             // Recalculando taxa de mutação
             taxaMutacao = tipoMutacao.valMaximo * (1D - desvio);
-            
-            System.out.println(taxaMutacao);
         }
+    }
+
+    private List<Cromossomo> juntarPopulacoes(List<Cromossomo> pop, List<Cromossomo> filhos) {
+        List<Cromossomo> novaPopulacao = new ArrayList<>();
+        
+        // Juntando a população atual com os filhos
+        novaPopulacao.addAll(pop);
+        novaPopulacao.addAll(filhos);
+        
+        // Ordenando a nova população pelo valor do fitnes
+        novaPopulacao.sort(new CromossomoComparator());
+        
+        // retornando apenas os melhores individuos
+        return novaPopulacao.subList(0, this.tamPopulacao);
+    }
+
+    private List<Cromossomo> substituirPopulacao(List<Cromossomo> pop, List<Cromossomo> filhos, int eletismo) {
+        List<Cromossomo> melhores = new ArrayList<>();
+        
+        // Ordenando população atual
+        pop.sort(new CromossomoComparator());
+        
+        // Selecionando os melhores da população atual
+        melhores = pop.subList(0, eletismo);
+        
+        return juntarPopulacoes(melhores, filhos);
     }
 
     private void imprimirResultadoAtual(Integer geracao, Cromossomo sol) {
         if (this.verbose) {
-            System.out.printf("[Gera. %d] (Fit. %f)", geracao, sol.getFitness());
+            System.out.printf("[Gera. %d] (Fit. %f)\n", geracao, sol.getFitness());
         }
     }
 
@@ -343,12 +373,20 @@ public class GA {
     }
 
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_13_3.pos";
+        String arquivo;
+        arquivo = "instances/bus_13_3.pos";
+        arquivo = "instances/bus_29_1.pos";
+//        arquivo = "instances/bus_32_1.pos";
+//        arquivo = "instances/bus_83_11.pos";
+//        arquivo = "instances/bus_135_8.pos";
+//        arquivo = "instances/bus_201_3.pos";
+//        arquivo = "instances/bus_873_7.pos";
+//        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, rede.getNumArestas(), TipoSelecao.ROLETA, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.05D, TipoSelecaoNovaPopulacao.JUNCAO);
-        System.out.println(ga + "\n\nExecução:");
-        Cromossomo resultado = ga.executar(60 * 1);
+        GA ga = new GA(rede, 30, TipoSelecao.TORNEIO, TipoCruzamento.PONTO_4, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO);
+        System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
+        Cromossomo resultado = ga.executar(60 * 10);
     }
 
 }
