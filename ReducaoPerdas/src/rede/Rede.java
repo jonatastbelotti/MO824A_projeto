@@ -1,10 +1,21 @@
 package rede;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.style.lines.SeriesLines;
+import org.knowm.xchart.style.markers.Marker;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  *
@@ -20,7 +31,9 @@ public class Rede {
     private ArrayList<Aresta> arestas;
     private ArrayList<Aresta>[] arestasSaindoDe;
     private ArrayList<Vertice> fontes;
-    private Vertice origem;
+    private Vertice origem = null;
+    private Integer largura = 10;
+    private Integer altura = 10;
 
     public Rede(Integer numVertices) {
         this.iniciarRede(numVertices);
@@ -87,7 +100,8 @@ public class Rede {
         String linha = lerArq.readLine();
         Boolean lendoAresta = Boolean.FALSE;
         Boolean lendoChave = Boolean.FALSE;
-        int ID = 0, SRC_BUS = 1, REC_BUS = 2, R = 3, X = 4, PL_KW = 5, QL_KVAR = 6, S_NS = 7;
+        Boolean lendoCoordenadas = Boolean.FALSE;
+        int ID = 0, SRC_BUS = 1, REC_BUS = 2, R = 3, X = 4, PL_KW = 5, QL_KVAR = 6, S_NS = 7, IND_X = 1, IND_Y = 2;
         int id, id_origem, id_destino;
 
         // Percorrendo todas as linhas do arquivo
@@ -103,6 +117,7 @@ public class Rede {
             if (partes[0].startsWith(".")) {
                 lendoAresta = Boolean.FALSE;
                 lendoChave = Boolean.FALSE;
+                lendoCoordenadas = Boolean.FALSE;
 
                 switch (partes[0]) {
                     case ".Tie_count":
@@ -162,6 +177,27 @@ public class Rede {
                     case ".Tie":
                         lendoChave = Boolean.TRUE;
                         break;
+                    case ".Node":
+                        lendoCoordenadas = Boolean.TRUE;
+                        for (int i = 1; i < partes.length; i++) {
+                            if (partes[i].equals("x_coord")) {
+                                IND_X = i;
+                            } else {
+                                IND_Y = i;
+                            }
+                        }
+                        break;
+                    case ".Grid_size":
+                        lendoCoordenadas = Boolean.TRUE;
+                        this.largura = Integer.parseInt(partes[IND_X]);
+                        this.altura = Integer.parseInt(partes[IND_Y]);
+                        
+                        if (origem != null) {
+                            origem.setcoordenadas(largura/2, altura);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             } else if (lendoAresta || lendoChave) {
                 id = Integer.parseInt(partes[ID]);
@@ -182,6 +218,8 @@ public class Rede {
                 }
 
                 adicionarAresta(aresta);
+            } else if (lendoCoordenadas) {
+                vertices[Integer.parseInt(partes[0])].setcoordenadas(Integer.parseInt(partes[IND_X]), Integer.parseInt(partes[IND_Y]));
             }
 
             // lendo a próxima linha
@@ -237,15 +275,49 @@ public class Rede {
         resp += "\nSendo:";
         resp += "\n " + this.numFontes + " fontes";
         resp += "\n " + this.numChaves + " chaves";
+        resp += "\n " + this.vertices.length + " vertices totais";
+        resp += "\n " + this.arestas.size() + " arestas totais";
 
         return resp;
     }
 
+    /**
+     * Gráficos criados com a biblioteca https://github.com/knowm/XChart
+     * Documentação em: https://knowm.org/open-source/xchart/xchart-example-code/
+     * @param nomeArquivo 
+     */
+    public void plotarGrafico(String nomeArquivo) {
+        XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+        chart.getStyler().setLegendVisible(false);
+
+        for (Aresta aresta : this.arestas) {
+            if (aresta != null && !aresta.getOrigem().equals(origem) && !aresta.getDestino().equals(origem)) {
+                double[] x_ = new double[]{aresta.getOrigem().getX(), aresta.getDestino().getX()};
+                double[] y_ = new double[]{aresta.getOrigem().getY(), aresta.getDestino().getY()};
+                
+                XYSeries series = chart.addSeries("serie " + aresta.getId(), x_, y_);
+                series.setLineColor(Color.BLACK);
+                series.setLineStyle(SeriesLines.SOLID);
+                series.setMarker(SeriesMarkers.CIRCLE);
+                series.setMarkerColor(Color.BLACK);
+            }
+        }
+
+        try {
+            // Save it
+            BitmapEncoder.saveBitmap(chart, nomeArquivo, BitmapEncoder.BitmapFormat.PNG);
+        } catch (IOException ex) {
+            Logger.getLogger(Rede.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_83_11.pos";
+        String arquivo = "instances/bus_13_3.pos";
 
         Rede rede = new Rede(arquivo);
         System.out.println(rede);
+
+        rede.plotarGrafico("teste");
     }
 
 }

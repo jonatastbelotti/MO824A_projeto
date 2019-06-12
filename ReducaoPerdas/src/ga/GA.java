@@ -328,27 +328,27 @@ public class GA {
 
     private List<Cromossomo> juntarPopulacoes(List<Cromossomo> pop, List<Cromossomo> filhos) {
         List<Cromossomo> novaPopulacao = new ArrayList<>();
-        
+
         // Juntando a população atual com os filhos
         novaPopulacao.addAll(pop);
         novaPopulacao.addAll(filhos);
-        
+
         // Ordenando a nova população pelo valor do fitnes
         novaPopulacao.sort(new CromossomoComparator());
-        
+
         // retornando apenas os melhores individuos
         return novaPopulacao.subList(0, this.tamPopulacao);
     }
 
     private List<Cromossomo> substituirPopulacao(List<Cromossomo> pop, List<Cromossomo> filhos, int eletismo) {
         List<Cromossomo> melhores = new ArrayList<>();
-        
+
         // Ordenando população atual
         pop.sort(new CromossomoComparator());
-        
+
         // Selecionando os melhores da população atual
         melhores = pop.subList(0, eletismo);
-        
+
         return juntarPopulacoes(melhores, filhos);
     }
 
@@ -375,18 +375,19 @@ public class GA {
     public static void main(String[] args) throws IOException {
         String arquivo;
         arquivo = "instances/bus_13_3.pos";
-        arquivo = "instances/bus_29_1.pos";
-////        arquivo = "instances/bus_32_1.pos";
-        arquivo = "instances/bus_83_11.pos";
-////        arquivo = "instances/bus_135_8.pos";
+//        arquivo = "instances/bus_29_1.pos";
+//        arquivo = "instances/bus_32_1.pos";
+//        arquivo = "instances/bus_83_11.pos";
+//        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
-        arquivo = "instances/bus_873_7.pos";
-////        arquivo = "instances/bus_10476_84.pos";
+//        arquivo = "instances/bus_873_7.pos";
+//        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, 200, TipoSelecao.TORNEIO, TipoCruzamento.PONTO_4, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO);
+        GA ga = new GA(rede, 30, TipoSelecao.TORNEIO, TipoCruzamento.PONTO_4, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO);
         System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
-        Cromossomo resultado = ga.executar(60 * 10);
+        Cromossomo resultado = ga.executar(60 * 1);
+        resultado.plotarRede("resultado GA", rede);
     }
 
 }

@@ -98,6 +98,13 @@ public class Cromossomo extends ArrayList<Integer> {
 
         return aresta.potencia;
     }
+    
+    public void plotarRede(String nomeArquivo, Rede redeOriginal) {
+        // extraindo a árvore geradora de custo mínimo
+        Rede arvoreRede = extrairArvore(redeOriginal);
+        
+        arvoreRede.plotarGrafico(nomeArquivo);
+    }
 
     @Override
     public String toString() {

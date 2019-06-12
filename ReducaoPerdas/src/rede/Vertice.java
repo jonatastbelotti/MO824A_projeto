@@ -10,6 +10,8 @@ public class Vertice {
     private Boolean isFonte = Boolean.FALSE;
     private Double carga_PL_kw = 0D;
     private Double carga_QL_kvar = 0D;
+    private Integer x = 0;
+    private Integer y = 0;
 
     public Vertice(Integer id) {
         this.id = id;
@@ -38,6 +40,19 @@ public class Vertice {
 
     public Double getCarga_QL_kvar() {
         return carga_QL_kvar;
+    }
+
+    public void setcoordenadas(Integer x, Integer y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Integer getX() {
+        return x;
+    }
+
+    public Integer getY() {
+        return y;
     }
 
 }
