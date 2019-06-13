@@ -80,7 +80,7 @@ public class Main {
         System.out.println("\nResultado:");
         System.out.printf(" Fit. %f Arestas: %s\n", resultado.getFitness(), resultado.buscarArestasEmUso());
 
-        resultado.plotarRede("resultado GA", rede);
+        resultado.plotarRede(nomeGrafico, rede);
     }
 
 }

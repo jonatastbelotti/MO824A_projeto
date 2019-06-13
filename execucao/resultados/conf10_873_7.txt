@@ -1,0 +1,53 @@
+Rede com 881 nós e 900 arestas.
+Sendo:
+ 7 fontes
+ 27 chaves
+ 881 vertices totais
+ 907 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 50
+ Tipo seleção pais = Amostragem Universal Estocástica
+ Tipo cruzamento = Uniforme
+ Tipo mutação = Mutação Adaptativa
+ Taxa mutação = 0.1
+ Seleção nova população = Junção e seleção dos melhores
+ Busca local = Não
+
+Execução:
+[Gera. 0] (Fit. 41963041300.851770)
+[Gera. 2] (Fit. 34017013760.145996)
+[Gera. 3] (Fit. 33193577355.146942)
+[Gera. 4] (Fit. 32761710473.416794)
+[Gera. 5] (Fit. 29929698376.514175)
+[Gera. 6] (Fit. 28922102175.370754)
+[Gera. 7] (Fit. 27697584399.193855)
+[Gera. 8] (Fit. 24894062190.217730)
+[Gera. 11] (Fit. 22043377856.921900)
+[Gera. 14] (Fit. 22023297321.467880)
+[Gera. 15] (Fit. 22018105281.054333)
+[Gera. 17] (Fit. 20664985439.172344)
+[Gera. 19] (Fit. 19315151583.334730)
+[Gera. 33] (Fit. 19315151583.334724)
+[Gera. 45] (Fit. 19309895274.637985)
+[Gera. 55] (Fit. 19309895274.637980)
+[Gera. 69] (Fit. 19309895274.637978)
+[Gera. 138] (Fit. 19085812347.343422)
+[Gera. 141] (Fit. 19085812347.343420)
+[Gera. 193] (Fit. 19085812347.343414)
+[Gera. 233] (Fit. 19085812347.343410)
+[Gera. 247] (Fit. 19085812347.343407)
+[Gera. 337] (Fit. 18984791230.475150)
+[Gera. 341] (Fit. 18984615404.514930)
+[Gera. 352] (Fit. 18984615404.514927)
+[Gera. 371] (Fit. 18984615404.514923)
+[Gera. 404] (Fit. 18984615404.514920)
+[Gera. 417] (Fit. 18934281958.677120)
+[Gera. 420] (Fit. 18934281958.677116)
+[Gera. 561] (Fit. 18934281958.677113)
+[Gera. 3215] (Fit. 18934281958.677110)
+[Gera. 4458] (Fit. 18934281958.677105)
+[Gera. 10703] (Fit. 18934281958.677100)
+[Gera. 18253] (Fit. 18934281958.677097)
+[Gera. 40770] (Fit. 18934281958.677094)
+[Gera. 41005] (Fit. 18934281958.677090)

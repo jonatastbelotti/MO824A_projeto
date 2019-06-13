@@ -1,0 +1,46 @@
+Rede com 95 nós e 96 arestas.
+Sendo:
+ 11 fontes
+ 13 chaves
+ 95 vertices totais
+ 107 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 30
+ Tipo seleção pais = Torneio
+ Tipo cruzamento = 2 Pontos
+ Tipo mutação = Mutação Estática
+ Taxa mutação = 0.1
+ Seleção nova população = Junção e seleção dos melhores
+ Busca local = Sim a cada 50 gerações
+
+Execução:
+[Gera. 0] (Fit. 213829966.780000)
+[Gera. 1] (Fit. 180351895.190000)
+[Gera. 2] (Fit. 180097303.010000)
+[Gera. 4] (Fit. 180097303.010000)
+[Gera. 15] (Fit. 179135942.450000)
+[Gera. 22] (Fit. 179135942.450000)
+[Gera. 34] (Fit. 177792990.450000)
+[Gera. 35] (Fit. 177792990.450000)
+[Gera. 41] (Fit. 172615086.930000)
+[Gera. 60] (Fit. 166827467.730000)
+[Gera. 100] (Fit. 156579138.410000)
+[Gera. 103] (Fit. 156436316.010000)
+[Gera. 151] (Fit. 156436316.010000)
+[Gera. 200] (Fit. 149226956.010000)
+[Gera. 213] (Fit. 149226956.010000)
+[Gera. 300] (Fit. 143463959.610000)
+[Gera. 400] (Fit. 142286429.760000)
+[Gera. 500] (Fit. 141936963.110000)
+[Gera. 600] (Fit. 141672322.790000)
+[Gera. 700] (Fit. 141672322.790000)
+[Gera. 800] (Fit. 120689039.510000)
+[Gera. 804] (Fit. 120689039.510000)
+[Gera. 812] (Fit. 120689039.510000)
+[Gera. 900] (Fit. 111811992.110000)
+[Gera. 906] (Fit. 111811992.110000)
+[Gera. 1000] (Fit. 111024024.110000)
+[Gera. 1003] (Fit. 111024024.110000)
+[Gera. 1042] (Fit. 111024024.110000)
+[Gera. 3600] (Fit. 111024024.110000)

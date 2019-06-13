@@ -1,0 +1,35 @@
+Rede com 881 nós e 900 arestas.
+Sendo:
+ 7 fontes
+ 27 chaves
+ 881 vertices totais
+ 907 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 50
+ Tipo seleção pais = Torneio
+ Tipo cruzamento = 2 Pontos
+ Tipo mutação = Mutação Estática
+ Taxa mutação = 0.1
+ Seleção nova população = Junção e seleção dos melhores
+ Busca local = Sim a cada 50 gerações
+
+Execução:
+[Gera. 0] (Fit. 44574967843.895670)
+[Gera. 1] (Fit. 38001218939.332855)
+[Gera. 2] (Fit. 32094694778.624718)
+[Gera. 40] (Fit. 30730038720.768080)
+[Gera. 42] (Fit. 30730038720.768074)
+[Gera. 68] (Fit. 29785678940.431190)
+[Gera. 72] (Fit. 29785678940.431187)
+[Gera. 78] (Fit. 29539743758.975697)
+[Gera. 93] (Fit. 28526741004.077580)
+[Gera. 100] (Fit. 22849640414.092770)
+[Gera. 121] (Fit. 21774136163.357940)
+[Gera. 140] (Fit. 21740351498.244740)
+[Gera. 200] (Fit. 19789249899.767242)
+[Gera. 235] (Fit. 19750771738.559660)
+[Gera. 243] (Fit. 19161529723.417244)
+[Gera. 246] (Fit. 19161529723.417240)
+[Gera. 257] (Fit. 18643353780.212833)
+[Gera. 259] (Fit. 18643353780.212830)

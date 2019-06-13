@@ -1,0 +1,61 @@
+Rede com 205 nós e 216 arestas.
+Sendo:
+ 3 fontes
+ 15 chaves
+ 205 vertices totais
+ 219 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 30
+ Tipo seleção pais = Torneio
+ Tipo cruzamento = 2 Pontos
+ Tipo mutação = Mutação Estática
+ Taxa mutação = 0.1
+ Seleção nova população = Junção e seleção dos melhores
+ Busca local = Sim a cada 50 gerações
+
+Execução:
+[Gera. 0] (Fit. 318979782.809291)
+[Gera. 1] (Fit. 303618793.731254)
+[Gera. 2] (Fit. 295898534.124869)
+[Gera. 3] (Fit. 269540411.825159)
+[Gera. 32] (Fit. 269540411.825158)
+[Gera. 43] (Fit. 268383437.157433)
+[Gera. 47] (Fit. 268383437.157433)
+[Gera. 50] (Fit. 268383437.157433)
+[Gera. 57] (Fit. 268383437.157433)
+[Gera. 81] (Fit. 260159846.160915)
+[Gera. 88] (Fit. 259444902.969155)
+[Gera. 91] (Fit. 259444902.969155)
+[Gera. 100] (Fit. 201110159.643257)
+[Gera. 126] (Fit. 201110159.643257)
+[Gera. 137] (Fit. 201110159.643257)
+[Gera. 143] (Fit. 201110159.643257)
+[Gera. 151] (Fit. 198041317.817647)
+[Gera. 158] (Fit. 198041317.817647)
+[Gera. 178] (Fit. 198041317.817647)
+[Gera. 200] (Fit. 190133957.498234)
+[Gera. 276] (Fit. 190133957.498234)
+[Gera. 300] (Fit. 185671790.946343)
+[Gera. 400] (Fit. 184134501.902075)
+[Gera. 402] (Fit. 184134501.902075)
+[Gera. 405] (Fit. 184134501.902075)
+[Gera. 411] (Fit. 184134501.902075)
+[Gera. 463] (Fit. 184134501.902075)
+[Gera. 500] (Fit. 183093544.418709)
+[Gera. 519] (Fit. 183093544.418709)
+[Gera. 527] (Fit. 183093544.418709)
+[Gera. 600] (Fit. 182445345.318346)
+[Gera. 700] (Fit. 181157468.747103)
+[Gera. 800] (Fit. 180807687.970968)
+[Gera. 900] (Fit. 180690461.960283)
+[Gera. 909] (Fit. 180690461.960283)
+[Gera. 1000] (Fit. 180581894.379305)
+[Gera. 1100] (Fit. 180542029.582144)
+[Gera. 1103] (Fit. 180542029.582144)
+[Gera. 1200] (Fit. 180539995.198776)
+[Gera. 1201] (Fit. 180539995.198776)
+[Gera. 1300] (Fit. 180539954.324424)
+[Gera. 2535] (Fit. 180539954.324424)
+[Gera. 12338] (Fit. 180539954.324424)
+[Gera. 16253] (Fit. 180539954.324424)

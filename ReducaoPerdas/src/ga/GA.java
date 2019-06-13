@@ -434,6 +434,7 @@ public class GA {
         resp += "\n Tipo mutação = " + this.tipoMutacao;
         resp += "\n Taxa mutação = " + this.taxaMutacao;
         resp += "\n Seleção nova população = " + this.tipoSelecaoNovaPopulacao;
+        resp += "\n Busca local = " + this.buscaLocal;
 
         return resp;
     }

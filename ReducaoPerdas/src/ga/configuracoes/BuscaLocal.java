@@ -16,4 +16,9 @@ public enum BuscaLocal {
         this.qtdGeracoes = qtdGeracoes;
     }
 
+    @Override
+    public String toString() {
+        return this.nome;
+    }
+
 }

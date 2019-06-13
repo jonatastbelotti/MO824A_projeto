@@ -1,0 +1,107 @@
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_13_3.pos ./resultados/conf0_13_3 >> ./resultados/conf0_13_3.txt
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_29_1.pos ./resultados/conf0_29_1 >> ./resultados/conf0_29_1.txt
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_32_1.pos ./resultados/conf0_32_1 >> ./resultados/conf0_32_1.txt
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_83_11.pos ./resultados/conf0_83_11 >> ./resultados/conf0_83_11.txt
+
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_135_8.pos ./resultados/conf0_135_8 >> ./resultados/conf0_135_8.txt
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_201_3.pos ./resultados/conf0_201_3 >> ./resultados/conf0_201_3.txt
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_873_7.pos ./resultados/conf0_873_7 >> ./resultados/conf0_873_7.txt
+java -jar ReducaoPerdas.jar conf0 ./instances/bus_10476_84.pos ./resultados/conf0_10476_84 >> ./resultados/conf0_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_13_3.pos ./resultados/conf2_13_3 >> ./resultados/conf2_13_3.txt
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_29_1.pos ./resultados/conf2_29_1 >> ./resultados/conf2_29_1.txt
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_32_1.pos ./resultados/conf2_32_1 >> ./resultados/conf2_32_1.txt
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_83_11.pos ./resultados/conf2_83_11 >> ./resultados/conf2_83_11.txt
+
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_135_8.pos ./resultados/conf2_135_8 >> ./resultados/conf2_135_8.txt
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_201_3.pos ./resultados/conf2_201_3 >> ./resultados/conf2_201_3.txt
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_873_7.pos ./resultados/conf2_873_7 >> ./resultados/conf2_873_7.txt
+java -jar ReducaoPerdas.jar conf2 ./instances/bus_10476_84.pos ./resultados/conf2_10476_84 >> ./resultados/conf2_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_13_3.pos ./resultados/conf3_13_3 >> ./resultados/conf3_13_3.txt
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_29_1.pos ./resultados/conf3_29_1 >> ./resultados/conf3_29_1.txt
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_32_1.pos ./resultados/conf3_32_1 >> ./resultados/conf3_32_1.txt
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_83_11.pos ./resultados/conf3_83_11 >> ./resultados/conf3_83_11.txt
+
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_135_8.pos ./resultados/conf3_135_8 >> ./resultados/conf3_135_8.txt
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_201_3.pos ./resultados/conf3_201_3 >> ./resultados/conf3_201_3.txt
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_873_7.pos ./resultados/conf3_873_7 >> ./resultados/conf3_873_7.txt
+java -jar ReducaoPerdas.jar conf3 ./instances/bus_10476_84.pos ./resultados/conf3_10476_84 >> ./resultados/conf3_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_13_3.pos ./resultados/conf4_13_3 >> ./resultados/conf4_13_3.txt
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_29_1.pos ./resultados/conf4_29_1 >> ./resultados/conf4_29_1.txt
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_32_1.pos ./resultados/conf4_32_1 >> ./resultados/conf4_32_1.txt
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_83_11.pos ./resultados/conf4_83_11 >> ./resultados/conf4_83_11.txt
+
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_135_8.pos ./resultados/conf4_135_8 >> ./resultados/conf4_135_8.txt
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_201_3.pos ./resultados/conf4_201_3 >> ./resultados/conf4_201_3.txt
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_873_7.pos ./resultados/conf4_873_7 >> ./resultados/conf4_873_7.txt
+java -jar ReducaoPerdas.jar conf4 ./instances/bus_10476_84.pos ./resultados/conf4_10476_84 >> ./resultados/conf4_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_13_3.pos ./resultados/conf5_13_3 >> ./resultados/conf5_13_3.txt
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_29_1.pos ./resultados/conf5_29_1 >> ./resultados/conf5_29_1.txt
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_32_1.pos ./resultados/conf5_32_1 >> ./resultados/conf5_32_1.txt
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_83_11.pos ./resultados/conf5_83_11 >> ./resultados/conf5_83_11.txt
+
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_135_8.pos ./resultados/conf5_135_8 >> ./resultados/conf5_135_8.txt
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_201_3.pos ./resultados/conf5_201_3 >> ./resultados/conf5_201_3.txt
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_873_7.pos ./resultados/conf5_873_7 >> ./resultados/conf5_873_7.txt
+java -jar ReducaoPerdas.jar conf5 ./instances/bus_10476_84.pos ./resultados/conf5_10476_84 >> ./resultados/conf5_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_13_3.pos ./resultados/conf6_13_3 >> ./resultados/conf6_13_3.txt
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_29_1.pos ./resultados/conf6_29_1 >> ./resultados/conf6_29_1.txt
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_32_1.pos ./resultados/conf6_32_1 >> ./resultados/conf6_32_1.txt
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_83_11.pos ./resultados/conf6_83_11 >> ./resultados/conf6_83_11.txt
+
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_135_8.pos ./resultados/conf6_135_8 >> ./resultados/conf6_135_8.txt
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_201_3.pos ./resultados/conf6_201_3 >> ./resultados/conf6_201_3.txt
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_873_7.pos ./resultados/conf6_873_7 >> ./resultados/conf6_873_7.txt
+java -jar ReducaoPerdas.jar conf6 ./instances/bus_10476_84.pos ./resultados/conf6_10476_84 >> ./resultados/conf6_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_13_3.pos ./resultados/conf7_13_3 >> ./resultados/conf7_13_3.txt
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_29_1.pos ./resultados/conf7_29_1 >> ./resultados/conf7_29_1.txt
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_32_1.pos ./resultados/conf7_32_1 >> ./resultados/conf7_32_1.txt
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_83_11.pos ./resultados/conf7_83_11 >> ./resultados/conf7_83_11.txt
+
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_135_8.pos ./resultados/conf7_135_8 >> ./resultados/conf7_135_8.txt
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_201_3.pos ./resultados/conf7_201_3 >> ./resultados/conf7_201_3.txt
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_873_7.pos ./resultados/conf7_873_7 >> ./resultados/conf7_873_7.txt
+java -jar ReducaoPerdas.jar conf7 ./instances/bus_10476_84.pos ./resultados/conf7_10476_84 >> ./resultados/conf7_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_13_3.pos ./resultados/conf8_13_3 >> ./resultados/conf8_13_3.txt
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_29_1.pos ./resultados/conf8_29_1 >> ./resultados/conf8_29_1.txt
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_32_1.pos ./resultados/conf8_32_1 >> ./resultados/conf8_32_1.txt
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_83_11.pos ./resultados/conf8_83_11 >> ./resultados/conf8_83_11.txt
+
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_135_8.pos ./resultados/conf8_135_8 >> ./resultados/conf8_135_8.txt
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_201_3.pos ./resultados/conf8_201_3 >> ./resultados/conf8_201_3.txt
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_873_7.pos ./resultados/conf8_873_7 >> ./resultados/conf8_873_7.txt
+java -jar ReducaoPerdas.jar conf8 ./instances/bus_10476_84.pos ./resultados/conf8_10476_84 >> ./resultados/conf8_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_13_3.pos ./resultados/conf9_13_3 >> ./resultados/conf9_13_3.txt
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_29_1.pos ./resultados/conf9_29_1 >> ./resultados/conf9_29_1.txt
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_32_1.pos ./resultados/conf9_32_1 >> ./resultados/conf9_32_1.txt
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_83_11.pos ./resultados/conf9_83_11 >> ./resultados/conf9_83_11.txt
+
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_135_8.pos ./resultados/conf9_135_8 >> ./resultados/conf9_135_8.txt
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_201_3.pos ./resultados/conf9_201_3 >> ./resultados/conf9_201_3.txt
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_873_7.pos ./resultados/conf9_873_7 >> ./resultados/conf9_873_7.txt
+java -jar ReducaoPerdas.jar conf9 ./instances/bus_10476_84.pos ./resultados/conf9_10476_84 >> ./resultados/conf9_10476_84.txt
+
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_13_3.pos ./resultados/conf10_13_3 >> ./resultados/conf10_13_3.txt
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_29_1.pos ./resultados/conf10_29_1 >> ./resultados/conf10_29_1.txt
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_32_1.pos ./resultados/conf10_32_1 >> ./resultados/conf10_32_1.txt
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_83_11.pos ./resultados/conf10_83_11 >> ./resultados/conf10_83_11.txt
+
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_135_8.pos ./resultados/conf10_135_8 >> ./resultados/conf10_135_8.txt
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_201_3.pos ./resultados/conf10_201_3 >> ./resultados/conf10_201_3.txt
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_873_7.pos ./resultados/conf10_873_7 >> ./resultados/conf10_873_7.txt
+java -jar ReducaoPerdas.jar conf10 ./instances/bus_10476_84.pos ./resultados/conf10_10476_84 >> ./resultados/conf10_10476_84.txt
+
+
+a
+a
+a
+a
+a
+a

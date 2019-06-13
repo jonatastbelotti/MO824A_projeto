@@ -1,0 +1,40 @@
+Rede com 95 nós e 96 arestas.
+Sendo:
+ 11 fontes
+ 13 chaves
+ 95 vertices totais
+ 107 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 30
+ Tipo seleção pais = Amostragem Universal Estocástica
+ Tipo cruzamento = 2 Pontos
+ Tipo mutação = Mutação Estática
+ Taxa mutação = 0.1
+ Seleção nova população = Substituição sem eletismo
+ Busca local = Não
+
+Execução:
+[Gera. 0] (Fit. 179547023.020000)
+[Gera. 5] (Fit. 152395366.530000)
+[Gera. 21] (Fit. 152395366.530000)
+[Gera. 22] (Fit. 142469591.850000)
+[Gera. 30] (Fit. 142469591.850000)
+[Gera. 38] (Fit. 141913312.750000)
+[Gera. 60] (Fit. 141092938.540000)
+[Gera. 73] (Fit. 129278996.260000)
+[Gera. 89] (Fit. 129278996.260000)
+[Gera. 144] (Fit. 129278996.260000)
+[Gera. 189] (Fit. 126643156.760000)
+[Gera. 253] (Fit. 126643156.760000)
+[Gera. 267] (Fit. 126602335.790000)
+[Gera. 272] (Fit. 126602335.790000)
+[Gera. 314] (Fit. 126602335.790000)
+[Gera. 348] (Fit. 126365547.680000)
+[Gera. 362] (Fit. 126365547.680000)
+[Gera. 590] (Fit. 119495168.480000)
+[Gera. 1795] (Fit. 119054209.430000)
+[Gera. 1938] (Fit. 118650549.110000)
+
+Resultado:
+ Fit. 118650549.110000 Arestas: [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 39, 40, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 83, 84, 86, 87, 90, 92, 93, 94, 95]

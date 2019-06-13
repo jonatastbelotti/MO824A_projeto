@@ -1,0 +1,23 @@
+Rede com 17 nós e 16 arestas.
+Sendo:
+ 3 fontes
+ 3 chaves
+ 17 vertices totais
+ 19 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 30
+ Tipo seleção pais = Torneio
+ Tipo cruzamento = 2 Pontos
+ Tipo mutação = Mutação Estática
+ Taxa mutação = 0.1
+ Seleção nova população = Substituição sem eletismo
+ Busca local = Não
+
+Execução:
+[Gera. 0] (Fit. 109.003000)
+[Gera. 5] (Fit. 105.994750)
+[Gera. 48] (Fit. 105.994750)
+
+Resultado:
+ Fit. 105.994750 Arestas: [0, 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14]

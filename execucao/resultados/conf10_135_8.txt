@@ -1,0 +1,65 @@
+Rede com 144 nós e 156 arestas.
+Sendo:
+ 8 fontes
+ 21 chaves
+ 144 vertices totais
+ 164 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 30
+ Tipo seleção pais = Amostragem Universal Estocástica
+ Tipo cruzamento = Uniforme
+ Tipo mutação = Mutação Adaptativa
+ Taxa mutação = 0.1
+ Seleção nova população = Junção e seleção dos melhores
+ Busca local = Não
+
+Execução:
+[Gera. 0] (Fit. 272243195.583733)
+[Gera. 2] (Fit. 208361712.523436)
+[Gera. 5] (Fit. 180113848.244358)
+[Gera. 7] (Fit. 166644782.506616)
+[Gera. 10] (Fit. 163457518.842873)
+[Gera. 11] (Fit. 129718542.274723)
+[Gera. 14] (Fit. 129220526.129406)
+[Gera. 15] (Fit. 118640130.881144)
+[Gera. 18] (Fit. 111231493.701716)
+[Gera. 24] (Fit. 109900077.149491)
+[Gera. 26] (Fit. 105517329.987836)
+[Gera. 28] (Fit. 101845215.339905)
+[Gera. 32] (Fit. 101377572.971957)
+[Gera. 34] (Fit. 101377572.971957)
+[Gera. 36] (Fit. 100395120.357191)
+[Gera. 37] (Fit. 100077560.931058)
+[Gera. 43] (Fit. 100077560.931057)
+[Gera. 46] (Fit. 99960787.913195)
+[Gera. 49] (Fit. 99960787.913195)
+[Gera. 50] (Fit. 99673314.912671)
+[Gera. 53] (Fit. 99673314.912671)
+[Gera. 54] (Fit. 98881904.249174)
+[Gera. 58] (Fit. 98881904.249174)
+[Gera. 64] (Fit. 98804200.229953)
+[Gera. 67] (Fit. 98804200.229953)
+[Gera. 76] (Fit. 98804200.229953)
+[Gera. 94] (Fit. 98804200.229953)
+[Gera. 104] (Fit. 98804200.229953)
+[Gera. 844] (Fit. 98646903.438216)
+[Gera. 850] (Fit. 98646903.438216)
+[Gera. 883] (Fit. 98547252.003864)
+[Gera. 884] (Fit. 98547252.003864)
+[Gera. 889] (Fit. 98547252.003864)
+[Gera. 14218] (Fit. 96820442.406178)
+[Gera. 14219] (Fit. 96773298.373153)
+[Gera. 14224] (Fit. 96773298.373153)
+[Gera. 14237] (Fit. 96384160.915719)
+[Gera. 14240] (Fit. 96384160.915719)
+[Gera. 14385] (Fit. 96384160.915719)
+[Gera. 14416] (Fit. 96384160.915719)
+[Gera. 14431] (Fit. 95143404.724895)
+[Gera. 14435] (Fit. 95143404.724895)
+[Gera. 14442] (Fit. 95143404.724895)
+[Gera. 14453] (Fit. 95143404.724895)
+[Gera. 23909] (Fit. 95143404.724895)
+[Gera. 787381] (Fit. 95024480.500262)
+[Gera. 787389] (Fit. 95024480.500262)
+[Gera. 789939] (Fit. 94979944.223239)

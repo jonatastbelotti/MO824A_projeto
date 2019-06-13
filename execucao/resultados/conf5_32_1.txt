@@ -1,0 +1,27 @@
+Rede com 34 nós e 37 arestas.
+Sendo:
+ 1 fontes
+ 5 chaves
+ 34 vertices totais
+ 38 arestas totais
+
+Algoritmo Genético:
+ Tamanho população = 30
+ Tipo seleção pais = Torneio
+ Tipo cruzamento = 2 Pontos
+ Tipo mutação = Mutação Estática
+ Taxa mutação = 0.2
+ Seleção nova população = Substituição sem eletismo
+ Busca local = Não
+
+Execução:
+[Gera. 0] (Fit. 43527787.695000)
+[Gera. 1] (Fit. 41184176.025000)
+[Gera. 2] (Fit. 40127532.165000)
+[Gera. 5] (Fit. 40127532.165000)
+[Gera. 187] (Fit. 38934304.445000)
+[Gera. 189] (Fit. 38934304.445000)
+[Gera. 480] (Fit. 38654432.925000)
+
+Resultado:
+ Fit. 38654432.925000 Arestas: [0, 1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32, 33, 34, 35]
