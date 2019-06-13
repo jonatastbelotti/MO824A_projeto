@@ -127,6 +127,8 @@ public class GA {
                 return selecionarPaisRoleta(pop);
             case TORNEIO:
                 return selecionarPaisTorneio(pop);
+            case AMOSTRAGEM:
+                return selecionarPaisAmostragem(pop);
             default:
                 return selecionarPaisRoleta(pop);
         }
@@ -226,6 +228,47 @@ public class GA {
 
         }
 
+        return pais;
+    }
+    
+    private List<Cromossomo> selecionarPaisAmostragem(List<Cromossomo> pop) {
+        List<Cromossomo> pais = new ArrayList<>();
+        Double somaTotal = 0D;
+        List<Double> setas = new ArrayList<>();
+        Double espaco, soma, iniCromossomo, fimCromossomo;
+        
+        // calculando probabilidade total
+        for (Cromossomo c : pop) {
+            somaTotal += 1D / (1D + c.getFitness());
+        }
+        
+        // Embarralhando a população
+        Collections.shuffle(pop);
+        
+        // Posicionando todas as setas na roleta universal
+        espaco = somaTotal / pop.size();
+        soma = 0D;
+        while (setas.size() < pop.size()) {
+            setas.add(soma);
+            soma += espaco;
+        }
+        
+        // Selecionando todos os pais
+        for (Double valSeta : setas) {
+            iniCromossomo = 0D;
+            
+            for (Cromossomo c : pop) {
+                fimCromossomo = iniCromossomo + (1D / (1D + c.getFitness()));
+                
+                if (valSeta >= iniCromossomo && valSeta <= fimCromossomo) {
+                    pais.add(c);
+                    break;
+                }
+                
+                iniCromossomo = fimCromossomo;
+            }
+        }
+        
         return pais;
     }
 
@@ -376,18 +419,25 @@ public class GA {
     public static void main(String[] args) throws IOException {
         String arquivo;
         arquivo = "instances/bus_13_3.pos";
-//        arquivo = "instances/bus_29_1.pos";
-//        arquivo = "instances/bus_32_1.pos";
+        arquivo = "instances/bus_29_1.pos";
+        arquivo = "instances/bus_32_1.pos";
 //        arquivo = "instances/bus_83_11.pos";
 //        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
-//        arquivo = "instances/bus_873_7.pos";
+        arquivo = "instances/bus_873_7.pos";
         arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, rede.getNumArestas(), TipoSelecao.TORNEIO, TipoCruzamento.UNIFORME, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO_0);
+        
+        Double t = 100D;
+        GA ga = new GA(rede, t.intValue(), TipoSelecao.AMOSTRAGEM, TipoCruzamento.UNIFORME, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.JUNCAO);
+        
         System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
+        
         Cromossomo resultado = ga.executar((int) (60 * 5));
+        
+        System.out.println("\nResultado:");
+        
         resultado.plotarRede("resultado GA", rede);
     }
 

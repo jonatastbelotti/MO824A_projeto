@@ -6,7 +6,8 @@ package ga.configuracoes;
  */
 public enum TipoSelecao {
     ROLETA("Roleta"),
-    TORNEIO("Torneio");
+    TORNEIO("Torneio"),
+    AMOSTRAGEM("Amostragem Universal Estocástica");
 
     public String nome;
 
