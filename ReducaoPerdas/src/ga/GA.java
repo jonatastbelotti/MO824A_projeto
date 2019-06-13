@@ -48,14 +48,19 @@ public class GA {
     public void setVerbose(Boolean verbose) {
         this.verbose = verbose;
     }
-
+    
     public Cromossomo executar(Integer tempoExecucao) {
-        Integer geracao;
+        return executar(tempoExecucao, null);
+    }
+
+    public Cromossomo executar(Integer tempoExecucao, Integer maxGeraSemMelhora) {
+        Integer geracao, gerSemMelhora;
         Long tempInicial;
 
         // criando população inicial
         tempInicial = System.currentTimeMillis();
         geracao = 0;
+        gerSemMelhora = 0;
         this.iniciarPopulacao();
 
         // avaliando população inicial
@@ -66,9 +71,10 @@ public class GA {
         this.imprimirResultadoAtual(geracao, this.melhorSolucao);
 
         // executando iterações do algoritmo
-        while (((System.currentTimeMillis() - tempInicial) / 1000D) < tempoExecucao) {
+        while (((System.currentTimeMillis() - tempInicial) / 1000D) < tempoExecucao && (maxGeraSemMelhora == null || (maxGeraSemMelhora != null && gerSemMelhora < maxGeraSemMelhora))) {
             // incrementando geração
             geracao++;
+            gerSemMelhora++;
 
             // selecionando pais para o cruzamento
             List<Cromossomo> pais = this.selecionarPais(this.populacao);
@@ -95,6 +101,7 @@ public class GA {
             if (atual.getFitness() < this.melhorSolucao.getFitness()) {
                 this.melhorSolucao = new Cromossomo(atual);
                 this.imprimirResultadoAtual(geracao, this.melhorSolucao);
+                gerSemMelhora = 0;
             }
         }
 
