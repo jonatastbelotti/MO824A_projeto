@@ -360,7 +360,7 @@ public class Rede {
 
         return resp;
     }
-    
+
     public void plotarGrafico(String nomeArquivo) {
         plotarGrafico(nomeArquivo, false);
     }
@@ -373,19 +373,37 @@ public class Rede {
      * @param nomeArquivo
      */
     public void plotarGrafico(String nomeArquivo, boolean showGrafico) {
+        double[] x_, y_;
         XYChart chart = new XYChartBuilder().width(600).height(400).title(nomeArquivo).xAxisTitle("X").yAxisTitle("Y").build();
         chart.getStyler().setLegendVisible(false);
 
+        // Plotando arestas
         for (Aresta aresta : this.arestas) {
-            if (aresta != null) {
-                double[] x_ = new double[]{aresta.getV1().getX(), aresta.getV2().getX()};
-                double[] y_ = new double[]{aresta.getV1().getY(), aresta.getV2().getY()};
+            if (aresta != null && !aresta.getV1().equals(origem) && !aresta.getV2().equals(origem)) {
+                x_ = new double[]{aresta.getV1().getX(), aresta.getV2().getX()};
+                y_ = new double[]{aresta.getV1().getY(), aresta.getV2().getY()};
 
-                XYSeries series = chart.addSeries("serie " + aresta.getId(), x_, y_);
+                XYSeries series = chart.addSeries("serie aresta " + aresta.getId(), x_, y_);
                 series.setLineColor(Color.BLACK);
                 series.setLineStyle(SeriesLines.SOLID);
+                series.setMarker(SeriesMarkers.NONE);
+            }
+        }
+
+        // Plotando vertices
+        for (Vertice vertice : vertices) {
+            if (!vertice.equals(origem)) {
+                x_ = new double[]{vertice.getX()};
+                y_ = new double[]{vertice.getY()};
+
+                XYSeries series = chart.addSeries("serie vertice " + vertice.getId(), x_, y_);
                 series.setMarker(SeriesMarkers.CIRCLE);
-                series.setMarkerColor(Color.BLACK);
+
+                if (vertice.getIsFonte()) {
+                    series.setMarkerColor(Color.RED);
+                } else {
+                    series.setMarkerColor(Color.BLACK);
+                }
             }
         }
 
