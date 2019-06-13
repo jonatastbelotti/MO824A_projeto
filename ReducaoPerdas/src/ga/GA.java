@@ -156,7 +156,7 @@ public class GA {
             c = pop.get(random.nextInt(pop.size()));
 
             // seleciona o gene do cromossomo e realiza a mutação
-            c.set(random.nextInt(c.size()), random.nextInt(rede.getNumArestas()));
+            c.mutarGene(random.nextInt(rede.getNumArestas()));
         }
 
         return pop;
@@ -382,12 +382,12 @@ public class GA {
 //        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
 //        arquivo = "instances/bus_873_7.pos";
-//        arquivo = "instances/bus_10476_84.pos";
+        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, Math.min(200, rede.getNumVertices()), TipoSelecao.TORNEIO, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.4D, TipoSelecaoNovaPopulacao.SUBSTITUICAO_0);
+        GA ga = new GA(rede, rede.getNumArestas(), TipoSelecao.TORNEIO, TipoCruzamento.UNIFORME, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO_0);
         System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
-        Cromossomo resultado = ga.executar((int) (60 * 0.5));
+        Cromossomo resultado = ga.executar((int) (60 * 5));
         resultado.plotarRede("resultado GA", rede);
     }
 

@@ -55,4 +55,9 @@ public class Vertice {
         return y;
     }
 
+    @Override
+    public String toString() {
+        return "" + id;
+    }
+
 }

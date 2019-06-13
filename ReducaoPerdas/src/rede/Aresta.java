@@ -7,8 +7,8 @@ package rede;
 public class Aresta {
 
     private Integer id;
-    private Vertice origem;
-    private Vertice destino;
+    private Vertice v1;
+    private Vertice v2;
     private Double R = 0D;
     private Double X = 0D;
     private Boolean S_NS;
@@ -16,10 +16,10 @@ public class Aresta {
     private Integer peso = -1;
     public Potencia potencia;
 
-    public Aresta(Integer id, Vertice origem, Vertice destino) {
+    public Aresta(Integer id, Vertice v1, Vertice v2) {
         this.id = id;
-        this.origem = origem;
-        this.destino = destino;
+        this.v1 = v1;
+        this.v2 = v2;
         potencia = new Potencia();
     }
 
@@ -43,12 +43,12 @@ public class Aresta {
         return id;
     }
 
-    public Vertice getOrigem() {
-        return origem;
+    public Vertice getV1() {
+        return v1;
     }
 
-    public Vertice getDestino() {
-        return destino;
+    public Vertice getV2() {
+        return v2;
     }
 
     public Double getR() {
@@ -74,12 +74,10 @@ public class Aresta {
     public Integer getPeso() {
         return peso;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "" + id + " -> ori: " + origem.getId() + " dest: " + destino.getId() + " peso: " + peso;
+        return String.format("%d: %d - %d -> peso: %d", id, v1.getId(), v2.getId(), peso);
     }
 
 }

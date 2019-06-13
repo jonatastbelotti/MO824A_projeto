@@ -36,7 +36,7 @@ public class Kruskal {
 
         // Inciando árvore com todos os vértices
         Rede arvore = new Rede(grafo.getNumVertices());
-        arvore.setVertices(grafo.getVertices());
+        arvore.setVertices(grafo.getVertices(), grafo.getOrigem());
 
         // denifindo cada vértice como seu chefe e o tamanho de cada componente como 1
         for (int i = 0; i < chefes.length; i++) {
@@ -47,8 +47,8 @@ public class Kruskal {
         // percorrendo cada aresta do grafo em ordem crescente
         for (Aresta aresta : arestasOrdenadas) {
             // buscando quem é o chefe de cada vértica da aresta
-            int ch1 = buscaChefe(chefes, aresta.getOrigem().getId());
-            int ch2 = buscaChefe(chefes, aresta.getDestino().getId());
+            int ch1 = buscaChefe(chefes, aresta.getV1().getId());
+            int ch2 = buscaChefe(chefes, aresta.getV2().getId());
 
             // se os chefes dos dois vértices forem o mesmo significa que essa aresta fecha ciclo
             if (ch1 == ch2) {

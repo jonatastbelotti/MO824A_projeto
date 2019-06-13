@@ -1,6 +1,5 @@
 package rede;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,11 +9,11 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.lines.SeriesLines;
-import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
@@ -29,7 +28,7 @@ public class Rede {
     private Integer numFontes = 0;
     private Vertice[] vertices;
     private ArrayList<Aresta> arestas;
-    private ArrayList<Aresta>[] arestasSaindoDe;
+    private ArrayList<Aresta>[] listaAdjacencia;
     private ArrayList<Vertice> fontes;
     private Vertice origem = null;
     private Integer largura = 10;
@@ -43,11 +42,29 @@ public class Rede {
         carregarArquivo(nomeArquivo);
     }
 
+    public Rede(Rede rede) {
+        this.numVertices = rede.numVertices;
+        this.numArestas = rede.numArestas;
+        this.numChaves = rede.numChaves;
+        this.numFontes = rede.numFontes;
+        this.vertices = rede.vertices;
+        this.arestas = new ArrayList<>(rede.arestas);
+        this.fontes = new ArrayList<>(rede.fontes);
+        this.origem = rede.origem;
+        this.largura = rede.largura;
+        this.altura = rede.altura;
+
+        this.listaAdjacencia = new ArrayList[rede.listaAdjacencia.length];
+        for (int i = 0; i < rede.listaAdjacencia.length; i++) {
+            this.listaAdjacencia[i] = new ArrayList<>(rede.listaAdjacencia[i]);
+        }
+    }
+
     private void iniciarRede(Integer numVertices) {
         this.numVertices = numVertices;
         this.vertices = new Vertice[this.numVertices];
         this.arestas = new ArrayList<>();
-        this.arestasSaindoDe = new ArrayList[this.numVertices];
+        this.listaAdjacencia = new ArrayList[this.numVertices];
         this.fontes = new ArrayList<>();
 
         // Iniciando vetor de vertices
@@ -61,23 +78,36 @@ public class Rede {
         }
 
         // Iniciando lista de adjacencia
-        for (int i = 0; i < this.arestasSaindoDe.length; i++) {
-            this.arestasSaindoDe[i] = new ArrayList<>();
+        for (int i = 0; i < this.listaAdjacencia.length; i++) {
+            this.listaAdjacencia[i] = new ArrayList<>();
         }
     }
 
     private void adicionarAresta(Aresta aresta) {
+        Vertice v1, v2;
+
         while (this.arestas.size() < aresta.getId() + 1) {
             this.arestas.add(null);
         }
 
         this.arestas.set(aresta.getId(), aresta);
-        this.arestasSaindoDe[aresta.getOrigem().getId()].add(aresta);
+
+        v1 = aresta.getV1();
+        v2 = aresta.getV2();
+        this.listaAdjacencia[v1.getId()].add(aresta);
+        this.listaAdjacencia[v2.getId()].add(aresta);
     }
 
     public void addAresta(Aresta aresta) {
+        Vertice v1, v2;
+
         this.arestas.add(aresta);
-        this.arestasSaindoDe[aresta.getOrigem().getId()].add(aresta);
+
+        v1 = aresta.getV1();
+        v2 = aresta.getV2();
+
+        this.listaAdjacencia[v1.getId()].add(aresta);
+        this.listaAdjacencia[v2.getId()].add(aresta);
     }
 
     private void adicionarFonte(int codVertice) {
@@ -191,9 +221,9 @@ public class Rede {
                         lendoCoordenadas = Boolean.TRUE;
                         this.largura = Integer.parseInt(partes[IND_X]);
                         this.altura = Integer.parseInt(partes[IND_Y]);
-                        
+
                         if (origem != null) {
-                            origem.setcoordenadas(largura/2, altura);
+                            origem.setcoordenadas(largura / 2, altura);
                         }
                         break;
                     default:
@@ -209,7 +239,7 @@ public class Rede {
                 aresta.setX(Double.parseDouble(partes[X]));
 
                 if (lendoAresta) {
-                    aresta.getDestino().setPotencias(Double.parseDouble(partes[PL_KW]), Double.parseDouble(partes[QL_KVAR]));
+                    aresta.getV2().setPotencias(Double.parseDouble(partes[PL_KW]), Double.parseDouble(partes[QL_KVAR]));
                     aresta.setS_NS(partes[S_NS].equals("S"));
                 }
 
@@ -228,6 +258,55 @@ public class Rede {
 
     }
 
+    public Iterable<Aresta> getArestasVertice(Vertice vertice) {
+        return this.getArestasVertice(vertice.getId());
+    }
+
+    public Iterable<Aresta> getArestasVertice(Integer idVertice) {
+        return this.listaAdjacencia[idVertice];
+    }
+
+//    public Double calcularPerda() {
+//        Double p = 0D;
+//        
+//        Rede arvore = new Rede(this);
+//        
+//
+//        // Calculando a potencia total em cada aresta
+//        calcularPotencias(arvore);
+//
+//        // Passa por todas as arestas somando a perda de cada uma
+//        for (Aresta a : arvore.getArestas()) {
+//            if (a != null) {
+//                p += a.getR() * Math.pow(a.potencia.PL + a.potencia.QL, 2D);
+//            }
+//        }
+//
+//        return p;
+//    }
+//
+//    private void calcularPotencias(Rede arvore) {
+//        for (Aresta aresta : arvore.getArestasSaindoDe()[arvore.getOrigem().getId()]) {
+//            aresta.potencia = calcPotenciaAresta(arvore, aresta);
+//        }
+//    }
+//    private Potencia calcPotenciaAresta(Rede arvore, Aresta aresta) {
+//        aresta.potencia = new Potencia();
+//
+//        // Iniciando com os valores do vertice de destino
+//        aresta.potencia.PL = aresta.getDestino().getCarga_PL_kw();
+//        aresta.potencia.QL = aresta.getDestino().getCarga_QL_kvar();
+//
+//        // Somando com a potencias de todas as arestas que partem do vertice de destino
+//        for (Aresta aresta_aux : arvore.getArestasSaindoDe()[aresta.getDestino().getId()]) {
+//            Potencia p_aux = calcPotenciaAresta(arvore, aresta_aux);
+//
+//            aresta.potencia.PL += p_aux.PL;
+//            aresta.potencia.QL += p_aux.QL;
+//        }
+//
+//        return aresta.potencia;
+//    }
     public Integer getNumVertices() {
         return numVertices;
     }
@@ -236,8 +315,9 @@ public class Rede {
         return vertices;
     }
 
-    public void setVertices(Vertice[] vertices) {
+    public void setVertices(Vertice[] vertices, Vertice origem) {
         this.vertices = vertices;
+        this.origem = origem;
     }
 
     public Integer getNumArestas() {
@@ -264,8 +344,8 @@ public class Rede {
         return this.arestas.get(id);
     }
 
-    public ArrayList<Aresta>[] getArestasSaindoDe() {
-        return arestasSaindoDe;
+    public Vertice getOrigem() {
+        return this.origem;
     }
 
     @Override
@@ -280,21 +360,27 @@ public class Rede {
 
         return resp;
     }
+    
+    public void plotarGrafico(String nomeArquivo) {
+        plotarGrafico(nomeArquivo, false);
+    }
 
     /**
      * Gráficos criados com a biblioteca https://github.com/knowm/XChart
-     * Documentação em: https://knowm.org/open-source/xchart/xchart-example-code/
-     * @param nomeArquivo 
+     * Documentação em:
+     * https://knowm.org/open-source/xchart/xchart-example-code/
+     *
+     * @param nomeArquivo
      */
-    public void plotarGrafico(String nomeArquivo) {
-        XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+    public void plotarGrafico(String nomeArquivo, boolean showGrafico) {
+        XYChart chart = new XYChartBuilder().width(600).height(400).title(nomeArquivo).xAxisTitle("X").yAxisTitle("Y").build();
         chart.getStyler().setLegendVisible(false);
 
         for (Aresta aresta : this.arestas) {
-            if (aresta != null && !aresta.getOrigem().equals(origem) && !aresta.getDestino().equals(origem)) {
-                double[] x_ = new double[]{aresta.getOrigem().getX(), aresta.getDestino().getX()};
-                double[] y_ = new double[]{aresta.getOrigem().getY(), aresta.getDestino().getY()};
-                
+            if (aresta != null) {
+                double[] x_ = new double[]{aresta.getV1().getX(), aresta.getV2().getX()};
+                double[] y_ = new double[]{aresta.getV1().getY(), aresta.getV2().getY()};
+
                 XYSeries series = chart.addSeries("serie " + aresta.getId(), x_, y_);
                 series.setLineColor(Color.BLACK);
                 series.setLineStyle(SeriesLines.SOLID);
@@ -303,21 +389,35 @@ public class Rede {
             }
         }
 
+        if (showGrafico) {
+            new SwingWrapper<>(chart).displayChart();
+        }
+
         try {
             // Save it
             BitmapEncoder.saveBitmap(chart, nomeArquivo, BitmapEncoder.BitmapFormat.PNG);
         } catch (IOException ex) {
-            Logger.getLogger(Rede.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Rede.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static void main(String[] args) throws IOException {
-        String arquivo = "instances/bus_13_3.pos";
+        String arquivo;
+        arquivo = "instances/bus_13_3.pos";
+//        arquivo = "instances/bus_29_1.pos";
+//        arquivo = "instances/bus_32_1.pos";
+//        arquivo = "instances/bus_83_11.pos";
+//        arquivo = "instances/bus_135_8.pos";
+//        arquivo = "instances/bus_201_3.pos";
+//        arquivo = "instances/bus_873_7.pos";
+//        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
         System.out.println(rede);
+//        System.out.printf("Perda: %f\n", rede.calcularPerda());
 
-        rede.plotarGrafico("teste");
+//        rede.plotarGrafico(arquivo.replace(".pos", ""));
     }
 
 }
