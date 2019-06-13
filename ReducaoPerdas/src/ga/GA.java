@@ -166,7 +166,8 @@ public class GA {
         switch (tipoSelecaoNovaPopulacao) {
             case JUNCAO:
                 return juntarPopulacoes(pop, filhos);
-            case SUBSTITUICAO:
+            case SUBSTITUICAO_0:
+            case SUBSTITUICAO_1:
             default:
                 return substituirPopulacao(pop, filhos, tipoSelecaoNovaPopulacao.eletismo);
         }
@@ -384,9 +385,9 @@ public class GA {
 //        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        GA ga = new GA(rede, 30, TipoSelecao.TORNEIO, TipoCruzamento.PONTO_4, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.SUBSTITUICAO);
+        GA ga = new GA(rede, Math.min(200, rede.getNumVertices()), TipoSelecao.TORNEIO, TipoCruzamento.PONTO_2, TipoMutacao.ESTATICA, 0.4D, TipoSelecaoNovaPopulacao.SUBSTITUICAO_0);
         System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
-        Cromossomo resultado = ga.executar(60 * 1);
+        Cromossomo resultado = ga.executar((int) (60 * 0.5));
         resultado.plotarRede("resultado GA", rede);
     }
 

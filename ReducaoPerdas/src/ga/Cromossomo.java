@@ -1,7 +1,8 @@
 package ga;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
+import java.util.List;
 import rede.Aresta;
 import rede.Potencia;
 import rede.Rede;
@@ -21,10 +22,17 @@ public class Cromossomo extends ArrayList<Integer> {
 
     public Cromossomo(Integer numGenes) {
         super();
-        Random random = new Random();
+        List<Integer> itens = new ArrayList<>();
+        
+        for (int i = 1; itens.size() < numGenes; i++) {
+            itens.add(i);
+        }
+        
+        Collections.shuffle(itens);
 
         while (size() < numGenes) {
-            add(random.nextInt(numGenes));
+            this.add(itens.get(0));
+            itens.remove(0);
         }
     }
 
