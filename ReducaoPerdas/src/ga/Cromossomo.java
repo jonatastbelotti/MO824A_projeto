@@ -49,6 +49,13 @@ public class Cromossomo extends ArrayList<Integer> {
         this.arestaUsada = new ArrayList<>(c.arestaUsada);
     }
 
+    private void copiarCromossomo(Cromossomo c) {
+        this.clear();
+        this.addAll(c);
+        this.fitness = c.fitness;
+        this.arestaUsada = new ArrayList<>(c.arestaUsada);
+    }
+
     @Override
     public boolean add(Integer e) {
         this.arestaUsada.add(Boolean.FALSE);
@@ -122,14 +129,14 @@ public class Cromossomo extends ArrayList<Integer> {
 
     private Potencia calcPotenciaAresta(Rede arvore, Aresta aresta, Vertice vindoDe) {
         Vertice indoPara;
-        
+
         // Identificando qual a origem e o detino da aresta
         if (aresta.getV1().equals(vindoDe)) {
             indoPara = aresta.getV2();
         } else {
             indoPara = aresta.getV1();
         }
-        
+
         // Verificando se esse vertice já foi visitado
         if (verticeVisitado[indoPara.getId()]) {
             return new Potencia();
@@ -173,6 +180,60 @@ public class Cromossomo extends ArrayList<Integer> {
         } else {
             set(gene, 0);
         }
+    }
+
+    void realizarBucaLocal(Rede rede) {
+        Cromossomo melhor = new Cromossomo(this);
+        boolean melhorou = false;
+
+        // Percorre todas as arestas em uso e tenta trocar por alguma sem uso
+        for (Integer ind_uso : buscarArestasEmUso()) {
+            for (Integer ind_sem_uso : buscarArestasSemUso()) {
+                Cromossomo cAux = new Cromossomo(this);
+
+                // Trocando as aresta e recalculando o fitness
+                cAux.set(ind_uso, this.get(ind_sem_uso));
+                cAux.set(ind_sem_uso, this.get(ind_uso));
+                cAux.calcularFitness(rede);
+
+                // Verificando se melhorou
+                if (cAux.fitness < melhor.fitness) {
+                    melhor = new Cromossomo(cAux);
+                    melhorou = true;
+                }
+            }
+        }
+
+        // Se a busca local melhorou a solução atualiza o Cromossomo
+        if (melhorou) {
+            this.copiarCromossomo(melhor);
+        }
+    }
+
+    public List<Integer> buscarArestasEmUso() {
+        List<Integer> resp = new ArrayList<>();
+
+        // Percorre o vetor e salva as posições em uso
+        for (int i = 0; i < arestaUsada.size(); i++) {
+            if (arestaUsada.get(i)) {
+                resp.add(i);
+            }
+        }
+
+        return resp;
+    }
+
+    public List<Integer> buscarArestasSemUso() {
+        List<Integer> resp = new ArrayList<>();
+
+        // Percorre o vetor e salva as posições em uso
+        for (int i = 0; i < arestaUsada.size(); i++) {
+            if (!arestaUsada.get(i)) {
+                resp.add(i);
+            }
+        }
+
+        return resp;
     }
 
     public void plotarRede(String nomeArquivo, Rede redeOriginal) {

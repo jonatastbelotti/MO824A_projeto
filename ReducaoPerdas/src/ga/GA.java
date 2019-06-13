@@ -1,5 +1,6 @@
 package ga;
 
+import ga.configuracoes.BuscaLocal;
 import ga.configuracoes.TipoCruzamento;
 import ga.configuracoes.TipoMutacao;
 import ga.configuracoes.TipoSelecao;
@@ -27,8 +28,9 @@ public class GA {
     private TipoMutacao tipoMutacao;
     private Double taxaMutacao = 0D;
     private TipoSelecaoNovaPopulacao tipoSelecaoNovaPopulacao;
+    private BuscaLocal buscaLocal;
 
-    public GA(Rede rede, Integer tamPopulacao, TipoSelecao selecao, TipoCruzamento cruzamento, TipoMutacao mutacao, Double taxMutacao, TipoSelecaoNovaPopulacao selecaoNovaPop) {
+    public GA(Rede rede, Integer tamPopulacao, TipoSelecao selecao, TipoCruzamento cruzamento, TipoMutacao mutacao, Double taxMutacao, TipoSelecaoNovaPopulacao selecaoNovaPop, BuscaLocal buscaLocal) {
         this.rede = rede;
         this.tamPopulacao = tamPopulacao;
         this.tipoSelecao = selecao;
@@ -36,6 +38,7 @@ public class GA {
         this.tipoMutacao = mutacao;
         this.taxaMutacao = taxMutacao;
         this.tipoSelecaoNovaPopulacao = selecaoNovaPop;
+        this.buscaLocal = buscaLocal;
 
         if (this.tamPopulacao % 2 == 1) {
             this.tamPopulacao++;
@@ -79,6 +82,9 @@ public class GA {
 
             // avalia novos individuos
             this.avaliarPopulacao(filhos);
+
+            // aplica busca local nos filhos
+            this.executarBuscaLocal(filhos, geracao);
 
             // seleciona nova população
             this.populacao = this.selecionarNovaPopulacao(this.populacao, filhos);
@@ -164,6 +170,15 @@ public class GA {
         return pop;
     }
 
+    private void executarBuscaLocal(List<Cromossomo> pop, Integer geracoes) {
+        if (buscaLocal == BuscaLocal.SIM && geracoes % buscaLocal.qtdGeracoes == 0) {
+            // faz a busca local em cada cromossomo
+            for (Cromossomo c : pop) {
+                c.realizarBucaLocal(rede);
+            }
+        }
+    }
+
     private List<Cromossomo> selecionarNovaPopulacao(List<Cromossomo> pop, List<Cromossomo> filhos) {
         switch (tipoSelecaoNovaPopulacao) {
             case JUNCAO:
@@ -230,21 +245,21 @@ public class GA {
 
         return pais;
     }
-    
+
     private List<Cromossomo> selecionarPaisAmostragem(List<Cromossomo> pop) {
         List<Cromossomo> pais = new ArrayList<>();
         Double somaTotal = 0D;
         List<Double> setas = new ArrayList<>();
         Double espaco, soma, iniCromossomo, fimCromossomo;
-        
+
         // calculando probabilidade total
         for (Cromossomo c : pop) {
             somaTotal += 1D / (1D + c.getFitness());
         }
-        
+
         // Embarralhando a população
         Collections.shuffle(pop);
-        
+
         // Posicionando todas as setas na roleta universal
         espaco = somaTotal / pop.size();
         soma = 0D;
@@ -252,23 +267,23 @@ public class GA {
             setas.add(soma);
             soma += espaco;
         }
-        
+
         // Selecionando todos os pais
         for (Double valSeta : setas) {
             iniCromossomo = 0D;
-            
+
             for (Cromossomo c : pop) {
                 fimCromossomo = iniCromossomo + (1D / (1D + c.getFitness()));
-                
+
                 if (valSeta >= iniCromossomo && valSeta <= fimCromossomo) {
                     pais.add(c);
                     break;
                 }
-                
+
                 iniCromossomo = fimCromossomo;
             }
         }
-        
+
         return pais;
     }
 
@@ -419,25 +434,26 @@ public class GA {
     public static void main(String[] args) throws IOException {
         String arquivo;
         arquivo = "instances/bus_13_3.pos";
-        arquivo = "instances/bus_29_1.pos";
-        arquivo = "instances/bus_32_1.pos";
+//        arquivo = "instances/bus_29_1.pos";
+//        arquivo = "instances/bus_32_1.pos";
 //        arquivo = "instances/bus_83_11.pos";
 //        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
-        arquivo = "instances/bus_873_7.pos";
-        arquivo = "instances/bus_10476_84.pos";
+//        arquivo = "instances/bus_873_7.pos";
+//        arquivo = "instances/bus_10476_84.pos";
 
         Rede rede = new Rede(arquivo);
-        
-        Double t = 100D;
-        GA ga = new GA(rede, t.intValue(), TipoSelecao.AMOSTRAGEM, TipoCruzamento.UNIFORME, TipoMutacao.ESTATICA, 0.1D, TipoSelecaoNovaPopulacao.JUNCAO);
-        
+
+        Double t = 50D;
+        GA ga = new GA(rede, t.intValue(), TipoSelecao.AMOSTRAGEM, TipoCruzamento.UNIFORME, TipoMutacao.ADAPTATIVA, 0.1D, TipoSelecaoNovaPopulacao.JUNCAO, BuscaLocal.SIM);
+
         System.out.println(rede + "\n\n" + ga + "\n\nExecução:");
-        
-        Cromossomo resultado = ga.executar((int) (60 * 5));
-        
+
+        Cromossomo resultado = ga.executar((int) (60 * 0.1));
+
         System.out.println("\nResultado:");
-        
+        System.out.printf(" Fit. %f Arestas: %s\n", resultado.getFitness(), resultado.buscarArestasEmUso());
+
         resultado.plotarRede("resultado GA", rede);
     }
 
