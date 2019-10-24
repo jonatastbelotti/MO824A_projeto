@@ -441,10 +441,11 @@ public class GA {
 
     public static void main(String[] args) throws IOException {
         String arquivo;
-        arquivo = "instances/bus_13_3.pos";
+        arquivo = "instances/rede_teste.pos";
+//        arquivo = "instances/bus_13_3.pos";
 //        arquivo = "instances/bus_29_1.pos";
-//        arquivo = "instances/bus_32_1.pos";
-//        arquivo = "instances/bus_83_11.pos";
+        arquivo = "instances/bus_32_1.pos";
+        arquivo = "instances/bus_83_11.pos";
 //        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
 //        arquivo = "instances/bus_873_7.pos";

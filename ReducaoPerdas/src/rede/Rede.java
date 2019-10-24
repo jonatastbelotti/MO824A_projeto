@@ -33,6 +33,7 @@ public class Rede {
     private Vertice origem = null;
     private Integer largura = 10;
     private Integer altura = 10;
+    private boolean[] verticeVisitado;
 
     public Rede(Integer numVertices) {
         this.iniciarRede(numVertices);
@@ -266,47 +267,69 @@ public class Rede {
         return this.listaAdjacencia[idVertice];
     }
 
-//    public Double calcularPerda() {
-//        Double p = 0D;
-//        
-//        Rede arvore = new Rede(this);
-//        
-//
-//        // Calculando a potencia total em cada aresta
-//        calcularPotencias(arvore);
-//
-//        // Passa por todas as arestas somando a perda de cada uma
-//        for (Aresta a : arvore.getArestas()) {
-//            if (a != null) {
-//                p += a.getR() * Math.pow(a.potencia.PL + a.potencia.QL, 2D);
-//            }
-//        }
-//
-//        return p;
-//    }
-//
-//    private void calcularPotencias(Rede arvore) {
-//        for (Aresta aresta : arvore.getArestasSaindoDe()[arvore.getOrigem().getId()]) {
-//            aresta.potencia = calcPotenciaAresta(arvore, aresta);
-//        }
-//    }
-//    private Potencia calcPotenciaAresta(Rede arvore, Aresta aresta) {
-//        aresta.potencia = new Potencia();
-//
-//        // Iniciando com os valores do vertice de destino
-//        aresta.potencia.PL = aresta.getDestino().getCarga_PL_kw();
-//        aresta.potencia.QL = aresta.getDestino().getCarga_QL_kvar();
-//
-//        // Somando com a potencias de todas as arestas que partem do vertice de destino
-//        for (Aresta aresta_aux : arvore.getArestasSaindoDe()[aresta.getDestino().getId()]) {
-//            Potencia p_aux = calcPotenciaAresta(arvore, aresta_aux);
-//
-//            aresta.potencia.PL += p_aux.PL;
-//            aresta.potencia.QL += p_aux.QL;
-//        }
-//
-//        return aresta.potencia;
-//    }
+    private Double calcularPerda(Rede arvore) {
+        Double p = 0D;
+
+        // Calculando a potencia total em cada aresta
+        calcularPotencias(arvore);
+
+        // Passa por todas as arestas somando a perda de cada uma
+        for (Aresta a : arvore.getArestas()) {
+            p += a.getR() * (a.potencia.PL * a.potencia.PL + a.potencia.QL * a.potencia.QL);
+        }
+
+        return p;
+    }
+
+    private void calcularPotencias(Rede arvore) {
+        // Marcando todos os vertices como não visitados
+        verticeVisitado = new boolean[arvore.getNumVertices()];
+        for (int i = 0; i < this.verticeVisitado.length; i++) {
+            verticeVisitado[i] = false;
+        }
+
+        // marcando a origem como já visitado
+        verticeVisitado[arvore.getOrigem().getId()] = true;
+
+        // Calculando as potencias de cada árvore partindo das estações de distribuição
+        for (Aresta aresta : arvore.getArestasVertice(arvore.getOrigem())) {
+            aresta.potencia = calcPotenciaAresta(arvore, aresta, arvore.getOrigem());
+        }
+    }
+
+    private Potencia calcPotenciaAresta(Rede arvore, Aresta aresta, Vertice vindoDe) {
+        Vertice indoPara;
+
+        // Identificando qual a origem e o detino da aresta
+        if (aresta.getV1().equals(vindoDe)) {
+            indoPara = aresta.getV2();
+        } else {
+            indoPara = aresta.getV1();
+        }
+
+        // Verificando se esse vertice já foi visitado
+        if (verticeVisitado[indoPara.getId()]) {
+            return new Potencia();
+        } else {
+            verticeVisitado[indoPara.getId()] = true;
+        }
+
+        // Iniciando com os valores do vertice de destino
+        aresta.potencia = new Potencia();
+        aresta.potencia.PL = indoPara.getCarga_PL_kw();
+        aresta.potencia.QL = indoPara.getCarga_QL_kvar();
+
+        // Somando com a potencias de todas as arestas que partem do vertice de destino e ainda não foram visitadas
+        for (Aresta aresta_aux : arvore.getArestasVertice(indoPara)) {
+            Potencia p_aux = calcPotenciaAresta(arvore, aresta_aux, indoPara);
+
+            aresta.potencia.PL += p_aux.PL;
+            aresta.potencia.QL += p_aux.QL;
+        }
+
+        return aresta.potencia;
+    }
+
     public Integer getNumVertices() {
         return numVertices;
     }
@@ -422,9 +445,10 @@ public class Rede {
 
     public static void main(String[] args) throws IOException {
         String arquivo;
-        arquivo = "instances/bus_13_3.pos";
+        arquivo = "instances/rede_teste.pos";
+//        arquivo = "instances/bus_13_3.pos";
 //        arquivo = "instances/bus_29_1.pos";
-//        arquivo = "instances/bus_32_1.pos";
+        arquivo = "instances/bus_32_1.pos";
 //        arquivo = "instances/bus_83_11.pos";
 //        arquivo = "instances/bus_135_8.pos";
 //        arquivo = "instances/bus_201_3.pos";
@@ -433,7 +457,7 @@ public class Rede {
 
         Rede rede = new Rede(arquivo);
         System.out.println(rede);
-//        System.out.printf("Perda: %f\n", rede.calcularPerda());
+        System.out.printf("Perda: %f\n", rede.calcularPerda(rede));
 
 //        rede.plotarGrafico(arquivo.replace(".pos", ""));
     }

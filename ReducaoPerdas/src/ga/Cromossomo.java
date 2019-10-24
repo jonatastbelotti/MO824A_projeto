@@ -105,7 +105,7 @@ public class Cromossomo extends ArrayList<Integer> {
 
         // Passa por todas as arestas somando a perda de cada uma
         for (Aresta a : arvore.getArestas()) {
-            p += a.getR() * Math.pow(a.potencia.PL + a.potencia.QL, 2D);
+            p += a.getR() * (a.potencia.PL * a.potencia.PL + a.potencia.QL * a.potencia.QL);
         }
 
         return p;

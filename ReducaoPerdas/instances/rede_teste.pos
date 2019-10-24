@@ -1,0 +1,23 @@
+.PU 0
+.V_base 23.00
+.S_base 100
+.Branch_count 5
+.Sectionalizing_count 5
+.Tie_count 5
+.Nodes 5
+.Feeders 1
+.Feeder_node_ids 0
+.Branch Src_bus Rec_bus R X PL_kw QL_kvar S_NS
+0 0 1 0.1 0.1 100 0 S
+1 1 3 0.1 0.1 100 0 S
+2 0 2 0.1 0.1 100 0 S
+3 3 4 0.1 0.1 1000 0 S 
+.Tie switches        
+4 2 4 0.1 0.1 1000 0
+.Node x_coord y_coord
+.Grid_size 8 8
+0 1 2
+1 2 3
+2 2 1
+3 3 3
+4 3 1
